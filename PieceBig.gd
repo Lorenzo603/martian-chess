@@ -16,10 +16,10 @@ func _process(delta):
 func _on_area_2d_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			is_dragging = true
-			starting_position = self.global_position
-			# TODO: dragging sprite should always be on the top layer
-			# TODO: make pieces not draggable when not proper player turn
+			if board.is_piece_draggable(starting_tile_x, starting_tile_y):
+				is_dragging = true
+				starting_position = self.global_position
+				# TODO: dragging sprite should always be on the top layer
 			
 		elif event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 			if not is_dragging: # avoids triggering release on pieces in the destination tile

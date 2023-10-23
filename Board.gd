@@ -16,6 +16,13 @@ var board_state = [
 	["", "M", "B", "B"],
 ]
 
+func update_player_turn():
+	player_turn += 1
+	if player_turn > MAX_PLAYERS:
+		player_turn = 1
+
+func is_piece_draggable(starting_tile_x, starting_tile_y):
+	return (starting_tile_x > 3 and player_turn == 1) or (starting_tile_x <=3 and player_turn == 2)
 
 func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
 	print_debug(str(starting_tile_x) + "," + str(starting_tile_y) + "[" + board_state[starting_tile_x][starting_tile_y] + "]" +
@@ -33,10 +40,14 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 	
 	var current_piece_type = board_state[starting_tile_x][starting_tile_y]
 	var is_movement_valid = _is_piece_movement_valid(current_piece_type, starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y)
-	print_debug("is_movement_valid: " + str(is_movement_valid))
+	
+	# TODO: cannot "reject" move
+	
 	if is_movement_valid:
 		board_state[starting_tile_x][starting_tile_y] = ""
 		board_state[destination_tile_x][destination_tile_y] = current_piece_type
+		# TODO: capture piece
+		update_player_turn()
 	return is_movement_valid
 	
 func _is_piece_movement_valid(current_piece_type, starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
