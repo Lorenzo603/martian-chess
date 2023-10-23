@@ -53,10 +53,12 @@ func _is_piece_movement_valid(current_piece_type, starting_tile_x, starting_tile
 				or ((destination_tile_y == starting_tile_y - 1 or (destination_tile_y == starting_tile_y - 2 and board_state[starting_tile_x][starting_tile_y - 1] == "")) and destination_tile_x == starting_tile_x)
 		"B":
 			if abs(starting_tile_x - destination_tile_x) == abs(starting_tile_y - destination_tile_y):
-				for i in range(min(starting_tile_x, destination_tile_x) + 1, max(starting_tile_x, destination_tile_x)):
-					for j in range(min(starting_tile_y, destination_tile_y) + 1, max(starting_tile_y, destination_tile_y)):
-						if board_state[i][j] != "":
-							return false
+				for num_gaps in range(1, abs(starting_tile_x - destination_tile_x)):
+					var i = starting_tile_x + num_gaps * (1 if destination_tile_x > starting_tile_x else -1)
+					var j = starting_tile_y + num_gaps * (1 if destination_tile_y > starting_tile_y else -1)
+					if board_state[i][j] != "":
+						return false
+
 			if starting_tile_x == destination_tile_x:
 				for i in range(min(starting_tile_y, destination_tile_y) + 1, max(starting_tile_y, destination_tile_y)):
 					if board_state[starting_tile_x][i] != "":
