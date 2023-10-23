@@ -1,0 +1,288 @@
+[gd_scene load_steps=6 format=3 uid="uid://blb60kopg8ye8"]
+
+[ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
+[ext_resource type="Script" path="res://Board.gd" id="1_xp1cc"]
+[ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="2_a7rm7"]
+[ext_resource type="PackedScene" uid="uid://cqqr1dhi5si2y" path="res://PieceMedium.tscn" id="3_72c2s"]
+[ext_resource type="PackedScene" uid="uid://cw3uwvcp8qyfv" path="res://PieceSmall.tscn" id="4_bhcof"]
+
+[node name="Main" type="Node"]
+
+[node name="Board" type="Node" parent="."]
+script = ExtResource("1_xp1cc")
+
+[node name="Tile" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 576)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 1
+
+[node name="Tile2" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 576)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 1
+
+[node name="Tile3" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 576)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 1
+
+[node name="Tile4" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 576)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 1
+
+[node name="Tile5" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 512)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 2
+
+[node name="Tile6" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 512)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 2
+
+[node name="Tile7" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 512)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 2
+
+[node name="Tile8" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 512)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 2
+
+[node name="Tile9" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 448)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 3
+
+[node name="Tile10" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 448)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 3
+
+[node name="Tile11" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 448)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 3
+
+[node name="Tile12" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 448)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 3
+
+[node name="Tile13" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 384)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 4
+
+[node name="Tile14" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 384)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 4
+
+[node name="Tile15" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 384)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 4
+
+[node name="Tile16" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 384)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 4
+
+[node name="Tile17" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 316)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 5
+
+[node name="Tile18" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 316)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 5
+
+[node name="Tile19" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 316)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 5
+
+[node name="Tile20" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 316)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 5
+
+[node name="Tile21" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 252)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 6
+
+[node name="Tile22" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 252)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 6
+
+[node name="Tile23" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 252)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 6
+
+[node name="Tile24" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 252)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 6
+
+[node name="Tile25" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 188)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 7
+
+[node name="Tile26" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 188)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 7
+
+[node name="Tile27" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 188)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 7
+
+[node name="Tile28" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 188)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 7
+
+[node name="Tile29" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(282, 124)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 1
+metadata/TileCoordY = 8
+
+[node name="Tile30" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(346, 124)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 2
+metadata/TileCoordY = 8
+
+[node name="Tile31" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(410, 124)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 3
+metadata/TileCoordY = 8
+
+[node name="Tile32" parent="Board" instance=ExtResource("1_8shwo")]
+position = Vector2(474, 124)
+scale = Vector2(2, 2)
+metadata/TileCoordX = 4
+metadata/TileCoordY = 8
+
+[node name="PieceBig" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(410, 576)
+scale = Vector2(2, 2)
+
+[node name="PieceBig2" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(474, 576)
+scale = Vector2(2, 2)
+
+[node name="PieceBig3" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(474, 512)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(346, 576)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium2" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(410, 512)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium3" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(474, 448)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(346, 512)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall2" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(346, 448)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall3" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(410, 448)
+scale = Vector2(2, 2)
+
+[node name="PieceBig4" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(282, 188)
+scale = Vector2(2, 2)
+
+[node name="PieceBig5" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(346, 124)
+scale = Vector2(2, 2)
+
+[node name="PieceBig6" parent="." instance=ExtResource("2_a7rm7")]
+z_index = 1
+position = Vector2(282, 124)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium4" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(282, 252)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium5" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(346, 188)
+scale = Vector2(2, 2)
+
+[node name="PieceMedium6" parent="." instance=ExtResource("3_72c2s")]
+z_index = 1
+position = Vector2(410, 124)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall4" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(410, 252)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall5" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(346, 252)
+scale = Vector2(2, 2)
+
+[node name="PieceSmall6" parent="." instance=ExtResource("4_bhcof")]
+position = Vector2(410, 188)
+scale = Vector2(2, 2)

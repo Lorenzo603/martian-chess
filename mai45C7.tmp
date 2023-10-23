@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://blb60kopg8ye8"]
+
+[ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
+[ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="2_a7rm7"]
+
+[node name="Main" type="Node"]
+
+[node name="Tile" parent="." instance=ExtResource("1_8shwo")]
+position = Vector2(335, 297)
+scale = Vector2(3, 3)
+
+[node name="Tile2" parent="." instance=ExtResource("1_8shwo")]
+position = Vector2(468, 297)
+scale = Vector2(3, 3)
+
+[node name="Tile3" parent="." instance=ExtResource("1_8shwo")]
+position = Vector2(639, 296)
+scale = Vector2(3, 3)
+
+[node name="Tile4" parent="." instance=ExtResource("1_8shwo")]
+position = Vector2(734, 296)
+scale = Vector2(3, 3)
+
+[node name="PieceBig" parent="." instance=ExtResource("2_a7rm7")]
+position = Vector2(478, 447)
+scale = Vector2(3, 3)

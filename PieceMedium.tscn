@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqqr1dhi5si2y"]
+
+[ext_resource type="Texture2D" uid="uid://jlpq23ju5ar6" path="res://Assets/Sprites/PieceMedium.png" id="1_6iq18"]
+[ext_resource type="Script" path="res://PieceBig.gd" id="2_ai36f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sihur"]
+size = Vector2(26, 26)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xgu1j"]
+radius = 0.0
+
+[node name="PieceMedium" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_6iq18")
+script = ExtResource("2_ai36f")
+
+[node name="UserSelectPieceArea2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UserSelectPieceArea2D"]
+shape = SubResource("RectangleShape2D_sihur")
+
+[node name="DragOverlapArea2D" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragOverlapArea2D"]
+shape = SubResource("CircleShape2D_xgu1j")
+debug_color = Color(0.94902, 0.0745098, 0.533333, 0.419608)
+
+[connection signal="input_event" from="UserSelectPieceArea2D" to="." method="_on_area_2d_input_event"]
