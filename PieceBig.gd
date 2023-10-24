@@ -1,5 +1,7 @@
 extends Sprite2D
 
+const default_z_index = 1
+
 @onready var board = get_node("../Board")
 
 var is_dragging = false
@@ -19,13 +21,13 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			if board.is_piece_draggable(starting_tile_x, starting_tile_y):
 				is_dragging = true
 				starting_position = self.global_position
-				# TODO: dragging sprite should always be on the top layer
-			
+				self.z_index = RenderingServer.CANVAS_ITEM_Z_MAX
 		elif event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 			if not is_dragging: # avoids triggering release on pieces in the destination tile
 				return
 				
 			is_dragging = false
+			self.z_index = default_z_index
 			var has_moved_on_tile = $DragOverlapArea2D.has_overlapping_areas()
 			if not has_moved_on_tile:
 				self.global_position = starting_position
