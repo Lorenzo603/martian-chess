@@ -8,6 +8,7 @@ var is_dragging = false
 var starting_position = self.global_position 
 @export var starting_tile_x = 0
 @export var starting_tile_y = 0
+@export var starting_tile_ref: Sprite2D = null
 
 func _process(delta):
 	if is_dragging:
@@ -40,13 +41,21 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			var destination_tile_y = overlapping_tile.get_meta("TileCoordY")
 			
 			
-			var is_move_valid = board.is_move_valid(starting_tile_x, starting_tile_y, 
+			var move_result = board.is_move_valid(starting_tile_x, starting_tile_y, 
 				destination_tile_x, destination_tile_y
 			)
-			if not is_move_valid:
+			var is_movement_valid = move_result[0]
+			if not is_movement_valid:
 				self.global_position = starting_position
 				return
 				
+			starting_tile_ref.set_piece(null)
+			var has_captured = move_result[1]
+			if has_captured:
+				overlapping_tile.get_piece().queue_free()
+			overlapping_tile.set_piece(self)
+			starting_tile_ref = overlapping_tile
+			
 			var clamp_position = overlapping_tile.get_node("PieceClampPosition").global_position
 			self.global_position = clamp_position
 			self.starting_tile_x = destination_tile_x
