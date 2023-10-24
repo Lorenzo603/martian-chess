@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://blb60kopg8ye8"]
+[gd_scene load_steps=8 format=3 uid="uid://blb60kopg8ye8"]
 
 [ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
 [ext_resource type="Script" path="res://Board.gd" id="1_xp1cc"]
 [ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="2_a7rm7"]
 [ext_resource type="PackedScene" uid="uid://cqqr1dhi5si2y" path="res://PieceMedium.tscn" id="3_72c2s"]
 [ext_resource type="PackedScene" uid="uid://cw3uwvcp8qyfv" path="res://PieceSmall.tscn" id="4_bhcof"]
+[ext_resource type="Script" path="res://Player1Score.gd" id="6_w420h"]
+[ext_resource type="Script" path="res://Player2Score.gd" id="7_mrr5a"]
 
 [node name="Main" type="Node"]
 
@@ -340,3 +342,36 @@ scale = Vector2(2, 2)
 starting_tile_x = 1
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile27")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 557.0
+offset_top = 451.0
+offset_right = 674.0
+offset_bottom = 477.0
+text = "Player 1 Score: "
+
+[node name="Player1Score" type="Label" parent="."]
+offset_left = 680.0
+offset_top = 452.0
+offset_right = 770.0
+offset_bottom = 487.0
+text = "0"
+script = ExtResource("6_w420h")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 552.0
+offset_top = 184.0
+offset_right = 669.0
+offset_bottom = 210.0
+text = "Player 2 Score: "
+
+[node name="Player2Score" type="Label" parent="."]
+offset_left = 676.0
+offset_top = 184.0
+offset_right = 775.0
+offset_bottom = 210.0
+text = "0"
+script = ExtResource("7_mrr5a")
+
+[connection signal="score_changed" from="Board" to="Player1Score" method="_on_board_score_changed"]
+[connection signal="score_changed" from="Board" to="Player2Score" method="_on_board_score_changed"]

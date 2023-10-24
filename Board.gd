@@ -1,5 +1,7 @@
 extends Node
 
+signal score_changed(player, new_score)
+
 const MAX_PLAYERS = 2
 
 var player_turn = 1
@@ -9,6 +11,12 @@ var captured_pieces = [
 	[],
 	[]
 ]
+
+const piece_value_map = {
+	"S": 1,
+	"M": 2,
+	"B": 3,
+}
 
 var board_state = [
 	["B", "B", "M", ""],
@@ -55,10 +63,14 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 		if board_state[destination_tile_x][destination_tile_y] != "":
 			captured_pieces[player_turn - 1].append(board_state[destination_tile_x][destination_tile_y])
 			has_captured = true
+			score_changed.emit(player_turn, _calculate_score(captured_pieces[player_turn - 1]))
 		board_state[starting_tile_x][starting_tile_y] = ""
 		board_state[destination_tile_x][destination_tile_y] = current_piece_type
 		update_player_turn()
 	return [is_movement_valid, has_captured]
+	
+func _calculate_score(captured_pieces_list):
+	return captured_pieces_list.reduce(func(accum, piece_type): return accum + piece_value_map[piece_type], 0)
 	
 func _is_piece_movement_valid(current_piece_type, starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
 	match current_piece_type:
