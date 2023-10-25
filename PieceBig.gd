@@ -64,7 +64,4 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			self.starting_tile_x = destination_tile_x
 			self.starting_tile_y = destination_tile_y
 			
-			# TODO: end game
-			
-			
 

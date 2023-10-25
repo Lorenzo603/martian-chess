@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://blb60kopg8ye8"]
+[gd_scene load_steps=9 format=3 uid="uid://blb60kopg8ye8"]
 
 [ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
 [ext_resource type="Script" path="res://Board.gd" id="1_xp1cc"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cw3uwvcp8qyfv" path="res://PieceSmall.tscn" id="4_bhcof"]
 [ext_resource type="Script" path="res://Player1Score.gd" id="6_w420h"]
 [ext_resource type="Script" path="res://Player2Score.gd" id="7_mrr5a"]
+[ext_resource type="Script" path="res://GameOverLabel.gd" id="8_a2pag"]
 
 [node name="Main" type="Node"]
 
@@ -285,14 +286,12 @@ z_index = 1
 position = Vector2(212, 160)
 scale = Vector2(2, 2)
 starting_tile_x = 1
-starting_tile_y = 0
 starting_tile_ref = NodePath("../Board/Tile25")
 
 [node name="PieceBig5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
 z_index = 1
 position = Vector2(276, 96)
 scale = Vector2(2, 2)
-starting_tile_x = 0
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile30")
 
@@ -300,8 +299,6 @@ starting_tile_ref = NodePath("../Board/Tile30")
 z_index = 1
 position = Vector2(212, 96)
 scale = Vector2(2, 2)
-starting_tile_x = 0
-starting_tile_y = 0
 starting_tile_ref = NodePath("../Board/Tile29")
 
 [node name="PieceMedium4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
@@ -377,5 +374,15 @@ offset_bottom = 210.0
 text = "0"
 script = ExtResource("7_mrr5a")
 
+[node name="GameOverLabel" type="Label" parent="."]
+visible = false
+offset_left = 555.0
+offset_top = 313.0
+offset_right = 672.0
+offset_bottom = 339.0
+text = "GAME OVER"
+script = ExtResource("8_a2pag")
+
+[connection signal="game_ended" from="Board" to="GameOverLabel" method="_on_board_game_ended"]
 [connection signal="score_changed" from="Board" to="Player1Score" method="_on_board_score_changed"]
 [connection signal="score_changed" from="Board" to="Player2Score" method="_on_board_score_changed"]

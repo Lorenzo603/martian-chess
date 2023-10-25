@@ -1,6 +1,7 @@
 extends Node
 
 signal score_changed(player, new_score)
+signal game_ended
 
 const piece_big_texture = preload("res://Assets/Sprites/PieceBig.png")
 const piece_medium_texture = preload("res://Assets/Sprites/PieceMedium.png")
@@ -84,7 +85,10 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 		previous_starting_tile_y = starting_tile_y
 		previous_destination_tile_x = destination_tile_x
 		previous_destination_tile_y = destination_tile_y
-		update_player_turn()
+		if is_game_ended():
+			game_ended.emit()
+		else:
+			update_player_turn()
 	return [is_movement_valid, has_captured, promotion_piece]
 	
 func _calculate_score(captured_pieces_list):
@@ -149,3 +153,16 @@ func _get_num_pieces():
 		for j in range(0, 4):
 			num_pieces_map[board_state[i][j]] += 1 
 	return num_pieces_map
+
+func is_game_ended():
+	if player_turn == 2:
+		for i in range(0, 4):
+			for j in range(0, 4):
+				if board_state[i][j] != "":
+					return false
+	else:
+		for i in range(4, 8):
+			for j in range(0, 4):
+				if board_state[i][j] != "":
+					return false
+	return true
