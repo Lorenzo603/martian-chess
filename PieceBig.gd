@@ -48,11 +48,14 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			if not is_movement_valid:
 				self.global_position = starting_position
 				return
-				
+			
 			starting_tile_ref.set_piece(null)
 			var has_captured = move_result[1]
+			var promotion_piece = move_result[2]
 			if has_captured:
 				overlapping_tile.get_piece().queue_free()
+			if promotion_piece != "":
+				self.set_texture(board.piece_big_texture if promotion_piece == "B" else board.piece_medium_texture)
 			overlapping_tile.set_piece(self)
 			starting_tile_ref = overlapping_tile
 			
@@ -60,6 +63,8 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			self.global_position = clamp_position
 			self.starting_tile_x = destination_tile_x
 			self.starting_tile_y = destination_tile_y
+			
+			# TODO: end game
 			
 			
 

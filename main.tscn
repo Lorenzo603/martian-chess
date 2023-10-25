@@ -285,12 +285,14 @@ z_index = 1
 position = Vector2(212, 160)
 scale = Vector2(2, 2)
 starting_tile_x = 1
+starting_tile_y = 0
 starting_tile_ref = NodePath("../Board/Tile25")
 
 [node name="PieceBig5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
 z_index = 1
 position = Vector2(276, 96)
 scale = Vector2(2, 2)
+starting_tile_x = 0
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile30")
 
@@ -298,6 +300,8 @@ starting_tile_ref = NodePath("../Board/Tile30")
 z_index = 1
 position = Vector2(212, 96)
 scale = Vector2(2, 2)
+starting_tile_x = 0
+starting_tile_y = 0
 starting_tile_ref = NodePath("../Board/Tile29")
 
 [node name="PieceMedium4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
