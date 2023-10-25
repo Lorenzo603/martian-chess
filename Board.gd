@@ -30,6 +30,11 @@ var board_state = [
 	["", "M", "B", "B"],
 ]
 
+var previous_starting_tile_x = 0
+var previous_starting_tile_y = 0
+var previous_destination_tile_x = 0
+var previous_destination_tile_y = 0
+
 func update_player_turn():
 	player_turn += 1
 	if player_turn > MAX_PLAYERS:
@@ -51,11 +56,14 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 	if (destination_tile_x > 3 and player_turn == 1 and board_state[destination_tile_x][destination_tile_y] != "") \
 		or (destination_tile_x <= 3 and player_turn == 2 and board_state[destination_tile_x][destination_tile_y] != ""):
 		return [false, false]
+		
+	# cannot "reject" move
+	if previous_starting_tile_x == destination_tile_x and previous_starting_tile_y == destination_tile_y \
+		and previous_destination_tile_x == starting_tile_x and previous_destination_tile_y == starting_tile_y:
+		return [false, false]
 	
 	var current_piece_type = board_state[starting_tile_x][starting_tile_y]
 	var is_movement_valid = _is_piece_movement_valid(current_piece_type, starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y)
-	
-	# TODO: cannot "reject" move
 	
 	var has_captured = false
 	if is_movement_valid:
@@ -66,6 +74,10 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 			score_changed.emit(player_turn, _calculate_score(captured_pieces[player_turn - 1]))
 		board_state[starting_tile_x][starting_tile_y] = ""
 		board_state[destination_tile_x][destination_tile_y] = current_piece_type
+		previous_starting_tile_x = starting_tile_x 
+		previous_starting_tile_y = starting_tile_y
+		previous_destination_tile_x = destination_tile_x
+		previous_destination_tile_y = destination_tile_y
 		update_player_turn()
 	return [is_movement_valid, has_captured]
 	
