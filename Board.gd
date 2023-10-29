@@ -3,9 +3,6 @@ extends Node
 signal score_changed(player, new_score)
 signal game_ended
 
-const piece_big_texture = preload("res://Assets/Sprites/PieceBig.png")
-const piece_medium_texture = preload("res://Assets/Sprites/PieceMedium.png")
-
 const MAX_PLAYERS = 2
 
 var player_turn = 1

@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://blb60kopg8ye8"]
+[gd_scene load_steps=11 format=3 uid="uid://blb60kopg8ye8"]
 
 [ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
+[ext_resource type="Script" path="res://AIPlayer.gd" id="1_g2rbc"]
+[ext_resource type="Script" path="res://GameController.gd" id="1_m7ali"]
 [ext_resource type="Script" path="res://Board.gd" id="1_xp1cc"]
 [ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="2_a7rm7"]
 [ext_resource type="PackedScene" uid="uid://cqqr1dhi5si2y" path="res://PieceMedium.tscn" id="3_72c2s"]
@@ -10,6 +12,12 @@
 [ext_resource type="Script" path="res://GameOverLabel.gd" id="8_a2pag"]
 
 [node name="Main" type="Node"]
+
+[node name="GameController" type="Node" parent="."]
+script = ExtResource("1_m7ali")
+
+[node name="AIPlayer" type="Node" parent="."]
+script = ExtResource("1_g2rbc")
 
 [node name="Board" type="Node" parent="."]
 script = ExtResource("1_xp1cc")
