@@ -5,6 +5,9 @@ signal game_ended
 
 const MAX_PLAYERS = 2
 
+enum GameMode {TWO_PLAYER, RANDOM_AI, HIGH_SCORE_AI, MINMAX_AI}
+@export var game_mode: GameMode = GameMode.TWO_PLAYER
+
 var player_turn = 1
 var game_over = false
 
@@ -37,13 +40,20 @@ var previous_starting_tile_y = 0
 var previous_destination_tile_x = 0
 var previous_destination_tile_y = 0
 
+func _ready():
+	SignalBus.end_turn.connect(_on_end_turn)
+
 func update_player_turn():
 	player_turn += 1
 	if player_turn > MAX_PLAYERS:
 		player_turn = 1
 
 func is_piece_draggable(starting_tile_x, starting_tile_y):
-	return (starting_tile_x > 3 and player_turn == 1) or (starting_tile_x <=3 and player_turn == 2)
+	return not game_over and \
+		(
+			(starting_tile_x > 3 and player_turn == 1) 
+			or (starting_tile_x <=3 and player_turn == 2 and game_mode == GameMode.TWO_PLAYER)
+		)
 
 func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
 	print_debug(str(starting_tile_x) + "," + str(starting_tile_y) + "[" + board_state[starting_tile_x][starting_tile_y] + "]" +
@@ -171,3 +181,37 @@ func is_game_ended():
 				if board_state[i][j] != "":
 					return false
 	return true
+
+func _on_end_turn():
+	if game_over:
+		return
+	
+	var next_move = null
+	match game_mode:
+		GameMode.TWO_PLAYER:
+			return
+		GameMode.RANDOM_AI:
+			await get_tree().create_timer(1.0).timeout
+			next_move = MartianChessEngine.get_random_move()
+		GameMode.HIGH_SCORE_AI:
+			await get_tree().create_timer(1.0).timeout
+			next_move = MartianChessEngine.get_high_score_move()
+		GameMode.MINMAX_AI:
+			await get_tree().create_timer(0.5).timeout
+			next_move = await MartianChessEngine.get_best_move()
+	
+	var moved_piece = _get_tile_by_coord(next_move["starting_tile_x"], next_move["starting_tile_y"]).piece
+	var destination_tile = _get_tile_by_coord(next_move["destination_tile_x"], next_move["destination_tile_y"])
+	
+	var move_result = is_move_valid(next_move["starting_tile_x"], next_move["starting_tile_y"], 
+		next_move["destination_tile_x"], next_move["destination_tile_y"]
+	)
+	SignalBus.piece_moved.emit(moved_piece, move_result, 
+		next_move["destination_tile_x"], next_move["destination_tile_y"], 
+		destination_tile)
+
+func _get_tile_by_coord(x, y):
+	for t in get_children():
+		if t.get_meta("TileCoordX") == x and t.get_meta("TileCoordY") == y:
+			return t
+	return null

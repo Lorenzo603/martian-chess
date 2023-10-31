@@ -1,5 +1,7 @@
 extends Node
 
+signal minmax_tree_completed
+
 const piece_strength_map = {
 	"": 0,
 	
@@ -16,6 +18,28 @@ const piece_strength_map = {
 
 @onready var board = get_node("../Main/Board")
 
+var best_move = null
+var minmax_tree = null
+
+
+func get_best_move():
+	_calculate_minmax_tree.call()
+	await minmax_tree_completed
+	print_debug(minmax_tree)	
+	best_move = {
+		"starting_tile_x": 2,
+		"starting_tile_y": 0,
+		"destination_tile_x": 5,
+		"destination_tile_y": 0
+	}
+	return best_move
+	
+func _calculate_minmax_tree():
+	print_debug("Calculating Minmax tree...")
+	await get_tree().create_timer(2.5).timeout
+	minmax_tree = "MINMAX TREE COMPLETED"
+	minmax_tree_completed.emit()
+	
 func get_high_score_move():
 	var board_state = board.board_state
 	var legal_moves = get_legal_moves()
@@ -25,8 +49,8 @@ func get_high_score_move():
 		legal_move["score"] = piece_strength_map[board_state[legal_move["destination_tile_x"]][legal_move["destination_tile_y"]]]
 		if legal_move["score"] > max_score:
 			max_score = legal_move["score"]
-		print_debug(str(legal_move["starting_tile_x"]) + "," + str(legal_move["starting_tile_y"]) +
-		" --> " + str(legal_move["destination_tile_x"]) + "," + str(legal_move["destination_tile_y"]) + "[ Score: " + str(legal_move["score"]) + "]")	
+		#print_debug(str(legal_move["starting_tile_x"]) + "," + str(legal_move["starting_tile_y"]) +
+		#" --> " + str(legal_move["destination_tile_x"]) + "," + str(legal_move["destination_tile_y"]) + "[ Score: " + str(legal_move["score"]) + "]")	
 	
 	var high_scores = _get_moves_with_highest_score(legal_moves, max_score)
 	return high_scores[randi() % len(high_scores)]
