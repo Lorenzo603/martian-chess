@@ -41,9 +41,10 @@ func _on_end_turn():
 			return
 		GameMode.RANDOM_AI:
 			await get_tree().create_timer(1.0).timeout
-			next_move = _get_random_move()
+			next_move = MartianChessEngine.get_random_move()
 		GameMode.SMART_AI:
-			return
+			await get_tree().create_timer(1.0).timeout
+			next_move = MartianChessEngine.get_high_score_move()
 	
 	var moved_piece = _get_tile_by_coord(next_move["starting_tile_x"], next_move["starting_tile_y"]).piece
 	var destination_tile = _get_tile_by_coord(next_move["destination_tile_x"], next_move["destination_tile_y"])
@@ -54,18 +55,6 @@ func _on_end_turn():
 	SignalBus.piece_moved.emit(moved_piece, move_result, 
 		next_move["destination_tile_x"], next_move["destination_tile_y"], 
 		destination_tile)
-
-
-func _get_random_move():
-	var legal_moves = MartianChessEngine.get_legal_moves()
-	var random_move = legal_moves[randi() % len(legal_moves)]
-	return {
-		"starting_tile_x": random_move["starting_tile_x"],
-		"starting_tile_y": random_move["starting_tile_y"],
-		"destination_tile_x": random_move["destination_tile_x"],
-		"destination_tile_y": random_move["destination_tile_y"]
-	}
-
 
 func _get_tile_by_coord(x, y):
 	for t in board.get_children():
