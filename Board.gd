@@ -48,7 +48,7 @@ func update_player_turn():
 	if player_turn > MAX_PLAYERS:
 		player_turn = 1
 
-func is_piece_draggable(starting_tile_x, starting_tile_y):
+func is_piece_draggable(starting_tile_x):
 	return not game_over and \
 		(
 			(starting_tile_x > 3 and player_turn == 1) 

@@ -5,5 +5,5 @@ extends Sprite2D
 func get_piece():
 	return piece
 
-func set_piece(piece):
-	self.piece = piece
+func set_piece(_piece):
+	self.piece = _piece

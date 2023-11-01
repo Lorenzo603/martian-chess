@@ -10,16 +10,16 @@ var starting_position = self.global_position
 @export var starting_tile_y = 0
 @export var starting_tile_ref: Sprite2D = null
 
-func _process(delta):
+func _process(_delta):
 	if is_dragging:
 		#$".".global_position = lerp($".".global_position, get_global_mouse_position(), 10 * delta)
 		self.global_position = get_global_mouse_position()
 
 
-func _on_area_2d_input_event(viewport, event, shape_idx):
+func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if board.is_piece_draggable(starting_tile_x, starting_tile_y):
+			if board.is_piece_draggable(starting_tile_x):
 				is_dragging = true
 				starting_position = self.global_position
 				self.z_index = RenderingServer.CANVAS_ITEM_Z_MAX

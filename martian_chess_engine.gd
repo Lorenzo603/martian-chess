@@ -19,26 +19,68 @@ const piece_strength_map = {
 @onready var board = get_node("../Main/Board")
 
 var best_move = null
-var minmax_tree = null
+var minmax_tree = "TREE START"
 
+var mutex: Mutex
+var semaphore: Semaphore
+var thread: Thread
+var exit_thread := false
 
+func _ready():
+	mutex = Mutex.new()
+	semaphore = Semaphore.new()
+	exit_thread = false
+
+	thread = Thread.new()
+	thread.start(_minmax_calculation_thread)
+
+func _minmax_calculation_thread():
+	Thread.set_thread_safety_checks_enabled(false)
+	while true:
+		semaphore.wait() # Wait until posted.
+
+		mutex.lock()
+		var should_exit = exit_thread # Protect with Mutex.
+		mutex.unlock()
+
+		if should_exit:
+			break
+
+		mutex.lock()
+		print_debug("Calculating Minmax tree...")
+		OS.delay_msec(5000)
+		print_debug("Calculating Minmax tree Completed!")
+		minmax_tree = "MINMAX TREE COMPLETED"
+		mutex.unlock()
+		minmax_tree_completed.emit()
+		
 func get_best_move():
-	_calculate_minmax_tree.call()
+	print_debug(minmax_tree)
+	semaphore.post()
 	await minmax_tree_completed
 	print_debug(minmax_tree)	
 	best_move = {
 		"starting_tile_x": 2,
 		"starting_tile_y": 0,
-		"destination_tile_x": 5,
+		"destination_tile_x": 4,
 		"destination_tile_y": 0
 	}
 	return best_move
 	
-func _calculate_minmax_tree():
-	print_debug("Calculating Minmax tree...")
-	await get_tree().create_timer(2.5).timeout
-	minmax_tree = "MINMAX TREE COMPLETED"
-	minmax_tree_completed.emit()
+
+# Thread must be disposed (or "joined"), for portability.
+func _exit_tree():
+	# Set exit condition to true.
+	mutex.lock()
+	exit_thread = true # Protect with Mutex.
+	mutex.unlock()
+
+	# Unblock by posting.
+	semaphore.post()
+
+	# Wait until it exits.
+	thread.wait_to_finish()
+
 	
 func get_high_score_move():
 	var board_state = board.board_state
@@ -82,7 +124,6 @@ func get_legal_moves():
 	return legal_moves
 
 func _get_legal_moves_for_piece_coord(piece_coord):
-	var board_state = board.board_state
 	var legal_moves = []
 	match piece_coord["piece_type"]:
 		"S": 
