@@ -204,8 +204,8 @@ func _on_end_turn():
 			next_move = await MartianChessEngine.get_best_move()
 			#print_debug("moved on..." + str(next_move))
 	
-	var moved_piece = _get_tile_by_coord(next_move["starting_tile_x"], next_move["starting_tile_y"]).piece
-	var destination_tile = _get_tile_by_coord(next_move["destination_tile_x"], next_move["destination_tile_y"])
+	var moved_piece = get_tile_by_coord(next_move["starting_tile_x"], next_move["starting_tile_y"]).piece
+	var destination_tile = get_tile_by_coord(next_move["destination_tile_x"], next_move["destination_tile_y"])
 	
 	var move_result = is_move_valid(next_move["starting_tile_x"], next_move["starting_tile_y"], 
 		next_move["destination_tile_x"], next_move["destination_tile_y"]
@@ -214,7 +214,7 @@ func _on_end_turn():
 		next_move["destination_tile_x"], next_move["destination_tile_y"], 
 		destination_tile)
 
-func _get_tile_by_coord(x, y):
+func get_tile_by_coord(x, y):
 	for t in get_children():
 		if t.get_meta("TileCoordX") == x and t.get_meta("TileCoordY") == y:
 			return t

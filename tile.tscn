@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b82v2l7odaygd"]
+[gd_scene load_steps=5 format=3 uid="uid://b82v2l7odaygd"]
 
 [ext_resource type="Texture2D" uid="uid://b0aqo4bf3vunc" path="res://Assets/Sprites/Tile.png" id="1_yggss"]
 [ext_resource type="Script" path="res://tile.gd" id="2_5lrcw"]
+[ext_resource type="Texture2D" uid="uid://cle4yukg2vitr" path="res://Assets/Sprites/LegalMoveMarker.png" id="3_elorn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlw7l"]
 size = Vector2(32, 32)
@@ -20,3 +21,8 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_mlw7l")
+
+[node name="LegalMoveMarker" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.498039)
+texture = ExtResource("3_elorn")

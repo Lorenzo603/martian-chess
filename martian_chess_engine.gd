@@ -193,11 +193,11 @@ func get_legal_moves(board_state, player_turn):
 						"piece_type": board_state[i][j]
 				})
 	for p in available_pieces:
-		legal_moves.append_array(_get_legal_moves_for_piece_coord(board_state, p))
+		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, p))
 		
 	return legal_moves
 
-func _get_legal_moves_for_piece_coord(board_state, piece_coord):
+func get_legal_moves_for_piece_coord(board_state, piece_coord):
 	var legal_moves = []
 	match piece_coord["piece_type"]:
 		"S": 
