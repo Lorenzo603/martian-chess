@@ -3,6 +3,8 @@ extends Node
 const piece_big_texture = preload("res://Assets/Sprites/PieceBig.png")
 const piece_medium_texture = preload("res://Assets/Sprites/PieceMedium.png")
 
+@onready var board = get_node("../Board")
+
 # TODO: player goes second
 
 func _ready():
@@ -10,6 +12,8 @@ func _ready():
 	
 func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_tile_y,
 	overlapping_tile):
+	_highlight_move_tiles(moved_piece.starting_tile_ref, overlapping_tile)
+	
 	moved_piece.starting_tile_ref.set_piece(null)
 	var has_captured = move_result[1]
 	var promotion_piece = move_result[2]
@@ -25,3 +29,10 @@ func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_t
 	moved_piece.starting_tile_x = destination_tile_x
 	moved_piece.starting_tile_y = destination_tile_y
 	
+	
+	
+func _highlight_move_tiles(starting_tile: Sprite2D, destination_tile: Sprite2D):
+	for tile in board.get_children():
+		tile.modulate = Color(1, 1, 1)
+	starting_tile.modulate = Color(0, 1, 0)
+	destination_tile.modulate = Color(0, 1, 0)
