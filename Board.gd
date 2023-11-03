@@ -1,6 +1,6 @@
 extends Node
 
-signal score_changed(player, new_score)
+signal score_changed(player, captured_pieces, new_score)
 signal game_ended
 
 const MAX_PLAYERS = 2
@@ -68,9 +68,10 @@ func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destina
 	if is_movement_valid:
 		# capture piece
 		if board_state[destination_tile_x][destination_tile_y] != "":
-			captured_pieces[player_turn - 1].append(board_state[destination_tile_x][destination_tile_y])
+			var captured_piece = board_state[destination_tile_x][destination_tile_y]
+			captured_pieces[player_turn - 1].append(captured_piece)
 			has_captured = true
-			score_changed.emit(player_turn, _calculate_score(captured_pieces[player_turn - 1]))
+			score_changed.emit(player_turn, captured_pieces, _calculate_score(captured_pieces[player_turn - 1]))
 		board_state[starting_tile_x][starting_tile_y] = ""
 		board_state[destination_tile_x][destination_tile_y] = current_piece_type if promotion_piece == "" else promotion_piece
 		previous_starting_tile_x = starting_tile_x 

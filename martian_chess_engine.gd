@@ -62,7 +62,7 @@ func _calculate_best_move():
 	var bestMove = null
 	previous_moves.clear()
 	var board_state = board.board_state.duplicate(true)
-	var depth = 4
+	var depth = 2
 
 	var legal_moves = get_legal_moves(board_state, 2)
 	# SortMoves(board, pseudoLegalMoves);
