@@ -103,8 +103,6 @@ func is_piece_movement_valid(_board_state, current_piece_type, starting_tile_x, 
 		):
 		return [false, ""]
 	
-	# TODO : FIX BUG: cannot promote when crossing canal
-	
 	# cannot "reject" move
 	if previous_starting_tile_x == destination_tile_x and previous_starting_tile_y == destination_tile_y \
 		and previous_destination_tile_x == starting_tile_x and previous_destination_tile_y == starting_tile_y:
@@ -149,7 +147,11 @@ func is_piece_movement_valid(_board_state, current_piece_type, starting_tile_x, 
 # If you have no Queens, you can create one by moving a Drone into a Pawn’s space (or vice versa)
 # and merging them. Similarly, if you control no Drones, you can make one by merging two of your Pawns.
 func _get_promotion_piece(_board_state, starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
-	var num_pieces_map = _get_num_pieces(_board_state)
+	# Cannot promote when crossing canal
+	if (starting_tile_x >= 4 and destination_tile_x <= 3) or (starting_tile_x <= 3 and destination_tile_x >= 4):
+		return ""
+	
+	var num_pieces_map = _get_num_pieces(_board_state) # TODO try to optimize by moving this out of the loop that starts in engine
 	if num_pieces_map["B"] == 0 and \
 		((_board_state[starting_tile_x][starting_tile_y] == "S" and _board_state[destination_tile_x][destination_tile_y] == "M")
 		or (_board_state[starting_tile_x][starting_tile_y] == "M" and _board_state[destination_tile_x][destination_tile_y] == "S")):
