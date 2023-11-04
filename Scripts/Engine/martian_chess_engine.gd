@@ -213,21 +213,27 @@ func get_legal_moves_for_piece_coord(board_state, piece_coord, num_pieces_map=nu
 		"B": 
 			precomputed_moves = MoveGeneration.preComputedBigMoves[piece_coord["sx"]][piece_coord["sy"]]
 			
-	for move in precomputed_moves:
-		var dx = move[0]
-		var dy = move[1]
-		var move_result = board.is_piece_movement_valid(board_state, piece_coord["piece_type"], 
-			piece_coord["sx"], piece_coord["sy"], dx, dy, num_pieces_map)
-		if move_result[0]:
-			legal_moves.append({
-				"starting_tile_x": piece_coord["sx"],
-				"starting_tile_y": piece_coord["sy"],
-				"destination_tile_x": dx,
-				"destination_tile_y": dy,
-				"starting_piece": "S",
-				"destination_piece": board_state[dx][dy],
-				"promotion_piece": move_result[1]
-			})
+	for direction_index in range(0, 8):
+		var moves = precomputed_moves[direction_index]
+		for move in moves:
+			var dx = move[0]
+			var dy = move[1]
+			var move_result = board.is_piece_movement_valid(board_state, piece_coord["piece_type"], 
+				piece_coord["sx"], piece_coord["sy"], dx, dy, num_pieces_map)
+			# if not move_result[0]:
+			#	break # TODO does not account for reject move
+			if move_result[0]:		
+				# TODO use array instead of map,maybe instantiate pool of arrays too?
+				legal_moves.append({
+					"starting_tile_x": piece_coord["sx"],
+					"starting_tile_y": piece_coord["sy"],
+					"destination_tile_x": dx,
+					"destination_tile_y": dy,
+					"starting_piece": "S",
+					"destination_piece": board_state[dx][dy],
+					"promotion_piece": move_result[1]
+				})
+			
 	return legal_moves
 	
 func get_random_move():
