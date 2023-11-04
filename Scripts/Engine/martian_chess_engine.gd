@@ -2,6 +2,16 @@ extends Node
 
 signal minimax_tree_completed
 
+const STARTING_TILE_X = 0
+const STARTING_TILE_Y = 1
+const DESTINATION_TILE_X = 2
+const DESTINATION_TILE_Y = 3
+const STARTING_PIECE = 4
+const DESTINATION_PIECE = 5
+const PROMOTION_PIECE = 6
+const SCORE = 7
+
+		
 const piece_strength_map = {
 	"": 0,
 	
@@ -72,7 +82,7 @@ func _calculate_best_move():
 
 	for move in legal_moves:
 		_make_move(board_state, move)
-		var cumulative_value = -piece_strength_map[move["destination_piece"]]
+		var cumulative_value = -piece_strength_map[move[DESTINATION_PIECE]]
 		var value = _minimax(board_state, previous_num_pieces_maps.back(), depth, -INF, INF, true, cumulative_value)
 		_unmake_move(board_state);
 		
@@ -87,17 +97,17 @@ func _calculate_best_move():
 
 
 func _make_move(board_state, move):
-	var moved_piece_type = board_state[move["starting_tile_x"]][move["starting_tile_y"]]
-	var promotion_piece_type = move["promotion_piece"]
-	board_state[move["destination_tile_x"]][move["destination_tile_y"]] = promotion_piece_type if promotion_piece_type != "" else moved_piece_type
-	board_state[move["starting_tile_x"]][move["starting_tile_y"]] = ""
+	var moved_piece_type = board_state[move[STARTING_TILE_X]][move[STARTING_TILE_Y]]
+	var promotion_piece_type = move[PROMOTION_PIECE]
+	board_state[move[DESTINATION_TILE_X]][move[DESTINATION_TILE_Y]] = promotion_piece_type if promotion_piece_type != "" else moved_piece_type
+	board_state[move[STARTING_TILE_X]][move[STARTING_TILE_Y]] = ""
 	previous_moves.push_back(move)
 	previous_num_pieces_maps.push_back(board.get_num_pieces(board_state))
 	
 func _unmake_move(board_state):
 	var move = previous_moves.pop_back()
-	board_state[move["destination_tile_x"]][move["destination_tile_y"]] = move["destination_piece"]
-	board_state[move["starting_tile_x"]][move["starting_tile_y"]] = move["starting_piece"]
+	board_state[move[DESTINATION_TILE_X]][move[DESTINATION_TILE_Y]] = move[DESTINATION_PIECE]
+	board_state[move[STARTING_TILE_X]][move[STARTING_TILE_Y]] = move[STARTING_PIECE]
 	previous_num_pieces_maps.pop_back()
 	
 func _minimax(board_state, num_pieces_map, depth, alpha, beta, is_maximizing_player, cumulative_value):
@@ -111,7 +121,7 @@ func _minimax(board_state, num_pieces_map, depth, alpha, beta, is_maximizing_pla
 		for move in legal_moves:
 			_make_move(board_state, move) 
 			var value = _minimax(board_state, previous_num_pieces_maps.back(), depth - 1, alpha, beta, false, 
-				cumulative_value + piece_strength_map[move["destination_piece"]])
+				cumulative_value + piece_strength_map[move[DESTINATION_PIECE]])
 			_unmake_move(board_state)
 
 			best_value = max(value, best_value)
@@ -129,7 +139,7 @@ func _minimax(board_state, num_pieces_map, depth, alpha, beta, is_maximizing_pla
 		for move in legal_moves:
 			_make_move(board_state, move)
 			var value = _minimax(board_state, previous_num_pieces_maps.back(), depth - 1, alpha, beta, true,
-				cumulative_value - piece_strength_map[move["destination_piece"]])
+				cumulative_value - piece_strength_map[move[DESTINATION_PIECE]])
 			_unmake_move(board_state)
 
 			best_value = min(value, best_value)
@@ -167,9 +177,9 @@ func get_high_score_move():
 	
 	var max_score = 0
 	for legal_move in legal_moves:
-		legal_move["score"] = piece_strength_map[board_state[legal_move["destination_tile_x"]][legal_move["destination_tile_y"]]]
-		if legal_move["score"] > max_score:
-			max_score = legal_move["score"]
+		legal_move[SCORE] = piece_strength_map[board_state[legal_move[DESTINATION_TILE_X]][legal_move[DESTINATION_TILE_Y]]]
+		if legal_move[SCORE] > max_score:
+			max_score = legal_move[SCORE]
 		#print_debug(str(legal_move["starting_tile_x"]) + "," + str(legal_move["starting_tile_y"]) +
 		#" --> " + str(legal_move["destination_tile_x"]) + "," + str(legal_move["destination_tile_y"]) + "[ Score: " + str(legal_move["score"]) + "]")	
 	
@@ -179,7 +189,7 @@ func get_high_score_move():
 func _get_moves_with_highest_score(legal_moves, max_score):
 	var high_score_moves = []
 	for legal_move in legal_moves:
-		if legal_move["score"] == max_score:
+		if legal_move[SCORE] == max_score:
 			high_score_moves.append(legal_move)
 	return high_score_moves
 		
@@ -224,17 +234,27 @@ func get_legal_moves_for_piece_coord(board_state, piece_coord, num_pieces_map=nu
 			#	break # TODO does not account for reject move
 			if move_result[0]:		
 				# TODO use array instead of map,maybe instantiate pool of arrays too?
-				legal_moves.append({
-					"starting_tile_x": piece_coord["sx"],
-					"starting_tile_y": piece_coord["sy"],
-					"destination_tile_x": dx,
-					"destination_tile_y": dy,
-					"starting_piece": "S",
-					"destination_piece": board_state[dx][dy],
-					"promotion_piece": move_result[1]
-				})
+				legal_moves.append(
+					_create_move(piece_coord["sx"], piece_coord["sy"],
+						dx, dy, piece_coord["piece_type"], board_state[dx][dy], move_result[1], 0)
+				)
 			
 	return legal_moves
+	
+
+func _create_move(starting_tile_x, starting_tile_y, 
+	destination_tile_x, destination_tile_y, 
+	starting_piece, destination_piece, promotion_piece, score):
+	return [
+		starting_tile_x,
+		starting_tile_y,
+		destination_tile_x,
+		destination_tile_y,
+		starting_piece,
+		destination_piece,
+		promotion_piece,
+		score
+	]
 	
 func get_random_move():
 	var legal_moves = get_legal_moves(board.board_state, 2)

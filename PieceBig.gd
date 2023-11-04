@@ -68,7 +68,10 @@ func _draw_legal_moves(piece_coord):
 	var legal_moves = MartianChessEngine.get_legal_moves_for_piece_coord(board.board_state, piece_coord)
 	for move in legal_moves:
 		# TODO: optimize by creating a method that gets the whole list of tiles in one go
-		var tile = board.get_tile_by_coord(move["destination_tile_x"], move["destination_tile_y"])
+		var tile = board.get_tile_by_coord(
+			move[MartianChessEngine.DESTINATION_TILE_X], 
+			move[MartianChessEngine.DESTINATION_TILE_Y]
+		)
 		var legal_move_marker = tile.get_node("LegalMoveMarker")
 		legal_move_marker.visible = true
 		legal_moves_markers.append(legal_move_marker)

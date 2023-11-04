@@ -213,14 +213,14 @@ func _on_end_turn():
 			next_move = await MartianChessEngine.get_best_move()
 			#print_debug("moved on..." + str(next_move))
 	
-	var moved_piece = get_tile_by_coord(next_move["starting_tile_x"], next_move["starting_tile_y"]).piece
-	var destination_tile = get_tile_by_coord(next_move["destination_tile_x"], next_move["destination_tile_y"])
+	var moved_piece = get_tile_by_coord(next_move[MartianChessEngine.STARTING_TILE_X], next_move[MartianChessEngine.STARTING_TILE_Y]).piece
+	var destination_tile = get_tile_by_coord(next_move[MartianChessEngine.DESTINATION_TILE_X], next_move[MartianChessEngine.DESTINATION_TILE_Y])
 	
-	var move_result = is_move_valid(next_move["starting_tile_x"], next_move["starting_tile_y"], 
-		next_move["destination_tile_x"], next_move["destination_tile_y"]
+	var move_result = is_move_valid(next_move[MartianChessEngine.STARTING_TILE_X], next_move[MartianChessEngine.STARTING_TILE_Y], 
+		next_move[MartianChessEngine.DESTINATION_TILE_X], next_move[MartianChessEngine.DESTINATION_TILE_Y]
 	)
 	SignalBus.piece_moved.emit(moved_piece, move_result, 
-		next_move["destination_tile_x"], next_move["destination_tile_y"], 
+		next_move[MartianChessEngine.DESTINATION_TILE_X], next_move[MartianChessEngine.DESTINATION_TILE_Y], 
 		destination_tile)
 
 func get_tile_by_coord(x, y):
