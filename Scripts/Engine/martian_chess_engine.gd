@@ -16,6 +16,7 @@ const piece_strength_map = {
 
 var best_move = null
 var previous_moves = []
+var previous_num_pieces_maps = []
 
 var mutex: Mutex
 var semaphore: Semaphore
@@ -61,16 +62,18 @@ func _calculate_best_move():
 	var best_value = INF # it is INF because we are loking for the best AI move, otherwise it would be -INF
 	var bestMove = null
 	previous_moves.clear()
+	previous_num_pieces_maps.clear()
 	var board_state = board.board_state.duplicate(true)
-	var depth = 2
+	var depth = 4
 
-	var legal_moves = get_legal_moves(board_state, 2)
+	var num_pieces_map = board.get_num_pieces(board_state)
+	var legal_moves = get_legal_moves(board_state, 2, num_pieces_map)
 	# SortMoves(board, pseudoLegalMoves);
 
 	for move in legal_moves:
 		_make_move(board_state, move)
 		var cumulative_value = -piece_strength_map[move["destination_piece"]]
-		var value = _minimax(board_state, depth, -INF, INF, true, cumulative_value)
+		var value = _minimax(board_state, previous_num_pieces_maps.back(), depth, -INF, INF, true, cumulative_value)
 		_unmake_move(board_state);
 		
 		# TODO save all best moves and pick a random one
@@ -89,23 +92,25 @@ func _make_move(board_state, move):
 	board_state[move["destination_tile_x"]][move["destination_tile_y"]] = promotion_piece_type if promotion_piece_type != "" else moved_piece_type
 	board_state[move["starting_tile_x"]][move["starting_tile_y"]] = ""
 	previous_moves.push_back(move)
+	previous_num_pieces_maps.push_back(board.get_num_pieces(board_state))
 	
 func _unmake_move(board_state):
 	var move = previous_moves.pop_back()
 	board_state[move["destination_tile_x"]][move["destination_tile_y"]] = move["destination_piece"]
 	board_state[move["starting_tile_x"]][move["starting_tile_y"]] = move["starting_piece"]
+	previous_num_pieces_maps.pop_back()
 	
-func _minimax(board_state, depth, alpha, beta, is_maximizing_player, cumulative_value):
+func _minimax(board_state, num_pieces_map, depth, alpha, beta, is_maximizing_player, cumulative_value):
 	if depth == 0:
 		return _evaluate_board(board_state, cumulative_value)
 
 	if is_maximizing_player:
 		var best_value = -INF
-		var legal_moves = get_legal_moves(board_state, 2)
+		var legal_moves = get_legal_moves(board_state, 2, num_pieces_map)
 		#SortMoves(board, pseudoLegalMoves)
 		for move in legal_moves:
 			_make_move(board_state, move) 
-			var value = _minimax(board_state, depth - 1, alpha, beta, false, 
+			var value = _minimax(board_state, previous_num_pieces_maps.back(), depth - 1, alpha, beta, false, 
 				cumulative_value + piece_strength_map[move["destination_piece"]])
 			_unmake_move(board_state)
 
@@ -119,11 +124,11 @@ func _minimax(board_state, depth, alpha, beta, is_maximizing_player, cumulative_
 	
 	else:
 		var best_value = INF
-		var legal_moves = get_legal_moves(board_state, 1)
+		var legal_moves = get_legal_moves(board_state, 1, num_pieces_map)
 		#SortMoves(board, pseudoLegalMoves)
 		for move in legal_moves:
 			_make_move(board_state, move)
-			var value = _minimax(board_state, depth - 1, alpha, beta, true,
+			var value = _minimax(board_state, previous_num_pieces_maps.back(), depth - 1, alpha, beta, true,
 				cumulative_value - piece_strength_map[move["destination_piece"]])
 			_unmake_move(board_state)
 
@@ -178,7 +183,7 @@ func _get_moves_with_highest_score(legal_moves, max_score):
 			high_score_moves.append(legal_move)
 	return high_score_moves
 		
-func get_legal_moves(board_state, player_turn):
+func get_legal_moves(board_state, player_turn, num_pieces_map=null):
 	var legal_moves = []
 	var available_pieces = []
 	var starting_row = 4 if player_turn == 1 else 0
@@ -193,11 +198,11 @@ func get_legal_moves(board_state, player_turn):
 						"piece_type": board_state[i][j]
 				})
 	for p in available_pieces:
-		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, p))
+		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, p, num_pieces_map))
 		
 	return legal_moves
 
-func get_legal_moves_for_piece_coord(board_state, piece_coord):
+func get_legal_moves_for_piece_coord(board_state, piece_coord, num_pieces_map=null):
 	var legal_moves = []
 	var precomputed_moves
 	match piece_coord["piece_type"]:
@@ -212,7 +217,7 @@ func get_legal_moves_for_piece_coord(board_state, piece_coord):
 		var dx = move[0]
 		var dy = move[1]
 		var move_result = board.is_piece_movement_valid(board_state, piece_coord["piece_type"], 
-			piece_coord["sx"], piece_coord["sy"], dx, dy)
+			piece_coord["sx"], piece_coord["sy"], dx, dy, num_pieces_map)
 		if move_result[0]:
 			legal_moves.append({
 				"starting_tile_x": piece_coord["sx"],
