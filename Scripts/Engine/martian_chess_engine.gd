@@ -62,7 +62,7 @@ func _calculate_best_move():
 	var bestMove = null
 	previous_moves.clear()
 	var board_state = board.board_state.duplicate(true)
-	var depth = 4
+	var depth = 2
 
 	var legal_moves = get_legal_moves(board_state, 2)
 	# SortMoves(board, pseudoLegalMoves);
@@ -199,79 +199,30 @@ func get_legal_moves(board_state, player_turn):
 
 func get_legal_moves_for_piece_coord(board_state, piece_coord):
 	var legal_moves = []
+	var precomputed_moves
 	match piece_coord["piece_type"]:
 		"S": 
-			for i in [-1, 1]:
-				for j in [-1, 1]:
-					var dx = piece_coord["sx"] + i
-					var dy = piece_coord["sy"] + j
-					if 0 <= dx and dx <= 7 and 0 <= dy and dy <= 3:
-						var move_result = board.is_piece_movement_valid(
-							board_state, "S", 
-							piece_coord["sx"], piece_coord["sy"], dx, dy)
-						if move_result[0]:
-							legal_moves.append({
-								"starting_tile_x": piece_coord["sx"],
-								"starting_tile_y": piece_coord["sy"],
-								"destination_tile_x": dx,
-								"destination_tile_y": dy,
-								"starting_piece": "S",
-								"destination_piece": board_state[dx][dy],
-								"promotion_piece": move_result[1]
-							})
+			precomputed_moves = MoveGeneration.preComputedSmallMoves[piece_coord["sx"]][piece_coord["sy"]]
 		"M": 
-			for i in [-2, -1, 1, 2]:
-				var dx = piece_coord["sx"] + i
-				var dy = piece_coord["sy"]
-				if 0 <= dx and dx <= 7 and 0 <= dy and dy <= 3:
-					var move_result = board.is_piece_movement_valid(
-						board_state, "M", 
-						piece_coord["sx"], piece_coord["sy"], dx, dy)
-					if move_result[0]:
-						legal_moves.append({
-							"starting_tile_x": piece_coord["sx"],
-							"starting_tile_y": piece_coord["sy"],
-							"destination_tile_x": dx,
-							"destination_tile_y": dy,
-							"starting_piece": "M",
-							"destination_piece": board_state[dx][dy],
-							"promotion_piece": move_result[1]
-						})
-			for j in [-2, -1, 1, 2]:
-				var dx = piece_coord["sx"]
-				var dy = piece_coord["sy"] + j
-				if 0 <= dx and dx <= 7 and 0 <= dy and dy <= 3:
-					var move_result = board.is_piece_movement_valid(
-						board_state, "M", 
-						piece_coord["sx"], piece_coord["sy"], dx, dy)
-					if move_result[0]:
-						legal_moves.append({
-							"starting_tile_x": piece_coord["sx"],
-							"starting_tile_y": piece_coord["sy"],
-							"destination_tile_x": dx,
-							"destination_tile_y": dy,
-							"starting_piece": "M",
-							"destination_piece": board_state[dx][dy],
-							"promotion_piece": move_result[1]
-						})
-						
+			precomputed_moves = MoveGeneration.preComputedMediumMoves[piece_coord["sx"]][piece_coord["sy"]]
 		"B": 
-			for i in range(0, 8):
-				for j in range(0, 4):
-					if not (i == piece_coord["sx"] and j == piece_coord["sy"]):
-						var move_result = board.is_piece_movement_valid(
-							board_state, "B", 
-							piece_coord["sx"], piece_coord["sy"], i, j)
-						if move_result[0]:
-							legal_moves.append({
-								"starting_tile_x": piece_coord["sx"],
-								"starting_tile_y": piece_coord["sy"],
-								"destination_tile_x": i,
-								"destination_tile_y": j,
-								"starting_piece": "B",
-								"destination_piece": board_state[i][j],
-								"promotion_piece": move_result[1]
-							})
+			precomputed_moves = MoveGeneration.preComputedBigMoves[piece_coord["sx"]][piece_coord["sy"]]
+			
+	for move in precomputed_moves:
+		var dx = move[0]
+		var dy = move[1]
+		var move_result = board.is_piece_movement_valid(board_state, piece_coord["piece_type"], 
+			piece_coord["sx"], piece_coord["sy"], dx, dy)
+		if move_result[0]:
+			legal_moves.append({
+				"starting_tile_x": piece_coord["sx"],
+				"starting_tile_y": piece_coord["sy"],
+				"destination_tile_x": dx,
+				"destination_tile_y": dy,
+				"starting_piece": "S",
+				"destination_piece": board_state[dx][dy],
+				"promotion_piece": move_result[1]
+			})
 	return legal_moves
 	
 func get_random_move():
