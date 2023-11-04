@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 SignalBus="*res://signal_bus.gd"
-MartianChessEngine="*res://martian_chess_engine.gd"
+MartianChessEngine="*res://Scripts/Engine/martian_chess_engine.gd"
+MoveGeneration="*res://Scripts/Engine/move_generation.gd"
 
 [editor_plugins]
 

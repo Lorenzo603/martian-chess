@@ -363,6 +363,7 @@ offset_bottom = 40.0
 script = ExtResource("8_guxql")
 
 [node name="Label" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 481.0
 offset_top = 545.0
 offset_right = 598.0
@@ -370,6 +371,7 @@ offset_bottom = 571.0
 text = "Player 1 Score: "
 
 [node name="Player1Score" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 606.0
 offset_top = 544.0
 offset_right = 696.0
@@ -377,6 +379,7 @@ offset_bottom = 579.0
 text = "0"
 
 [node name="Label2" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 475.0
 offset_top = 71.0
 offset_right = 592.0
@@ -384,6 +387,7 @@ offset_bottom = 97.0
 text = "Player 2 Score: "
 
 [node name="Player2Score" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 598.0
 offset_top = 71.0
 offset_right = 697.0
@@ -392,6 +396,7 @@ text = "0"
 
 [node name="GameOverLabel" type="Label" parent="LabelsControl"]
 visible = false
+layout_mode = 0
 offset_left = 555.0
 offset_top = 313.0
 offset_right = 672.0
@@ -424,6 +429,7 @@ position = Vector2(500, 200)
 texture = ExtResource("13_rnh5e")
 
 [node name="P1CapturedBigLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 510.0
 offset_right = 664.0
@@ -432,6 +438,7 @@ text = "x 0
 "
 
 [node name="P1CapturedMediumLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 470.0
 offset_right = 664.0
@@ -440,6 +447,7 @@ text = "x 0
 "
 
 [node name="P1CapturedSmallLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 432.0
 offset_right = 664.0
@@ -448,6 +456,7 @@ text = "x 0
 "
 
 [node name="P2CapturedBigLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 110.0
 offset_right = 664.0
@@ -456,6 +465,7 @@ text = "x 0
 "
 
 [node name="P2CapturedMediumLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 150.0
 offset_right = 664.0
@@ -464,6 +474,7 @@ text = "x 0
 "
 
 [node name="P2CapturedSmallLabel" type="Label" parent="LabelsControl"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 193.0
 offset_right = 664.0
