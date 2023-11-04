@@ -90,7 +90,7 @@ func _calculate_score(captured_pieces_list):
 	
 func is_piece_movement_valid(_board_state, current_piece_type, 
 	starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y,
-	num_pieces_map=null):
+	num_pieces_map=null, consider_reject_move=true):
 	# cannot move piece to same position
 	if starting_tile_x == destination_tile_x and starting_tile_y == destination_tile_y:
 		return [false, ""]
@@ -106,9 +106,12 @@ func is_piece_movement_valid(_board_state, current_piece_type,
 		return [false, ""]
 	
 	# cannot "reject" move
-	if previous_starting_tile_x == destination_tile_x and previous_starting_tile_y == destination_tile_y \
-		and previous_destination_tile_x == starting_tile_x and previous_destination_tile_y == starting_tile_y:
-		return [false, ""]
+	if consider_reject_move:
+		if is_reject_move(previous_starting_tile_x, previous_starting_tile_y,
+				previous_destination_tile_x, previous_destination_tile_y, 
+				starting_tile_x, starting_tile_y,
+				destination_tile_x, destination_tile_y):
+			return [false, ""]
 	
 	match current_piece_type:
 		"S":
@@ -167,6 +170,13 @@ func _get_promotion_piece(_board_state, starting_tile_x, starting_tile_y,
 		return "M"
 	return ""
 
+func is_reject_move(_previous_starting_tile_x, _previous_starting_tile_y,
+	_previous_destination_tile_x, _previous_destination_tile_y, 
+	_starting_tile_x, _starting_tile_y,
+	_destination_tile_x, _destination_tile_y):
+	return _previous_starting_tile_x == _destination_tile_x and _previous_starting_tile_y == _destination_tile_y \
+		and _previous_destination_tile_x == _starting_tile_x and _previous_destination_tile_y == _starting_tile_y
+	
 func get_num_pieces(_board_state):
 	var num_pieces_map = {
 		"": 0,
