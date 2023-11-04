@@ -11,6 +11,10 @@ const DESTINATION_PIECE = 5
 const PROMOTION_PIECE = 6
 const SCORE = 7
 
+const PIECE_COORD_STARTING_X = 0
+const PIECE_COORD_STARTING_Y = 1
+const PIECE_COORD_PIECE_TYPE = 2
+
 		
 const piece_strength_map = {
 	"": 0,
@@ -201,42 +205,44 @@ func get_legal_moves(board_state, player_turn, num_pieces_map=null):
 	for i in range(starting_row, ending_row):
 		for j in range(0, 4):
 			if board_state[i][j] != "":
-				available_pieces.append(
-					{
-						"sx": i,
-						"sy": j,
-						"piece_type": board_state[i][j]
-				})
+				available_pieces.append([
+					i,
+					j,
+					board_state[i][j]
+				])
 	for p in available_pieces:
 		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, p, num_pieces_map))
 		
 	return legal_moves
 
 func get_legal_moves_for_piece_coord(board_state, piece_coord, num_pieces_map=null):
+	var piece_coord_sx = piece_coord[PIECE_COORD_STARTING_X]
+	var piece_coord_sy = piece_coord[PIECE_COORD_STARTING_Y]
+	var piece_coord_piece_type = piece_coord[PIECE_COORD_PIECE_TYPE]
+	
 	var legal_moves = []
 	var precomputed_moves
-	match piece_coord["piece_type"]:
+	match piece_coord_piece_type:
 		"S": 
-			precomputed_moves = MoveGeneration.preComputedSmallMoves[piece_coord["sx"]][piece_coord["sy"]]
+			precomputed_moves = MoveGeneration.preComputedSmallMoves[piece_coord_sx][piece_coord_sy]
 		"M": 
-			precomputed_moves = MoveGeneration.preComputedMediumMoves[piece_coord["sx"]][piece_coord["sy"]]
+			precomputed_moves = MoveGeneration.preComputedMediumMoves[piece_coord_sx][piece_coord_sy]
 		"B": 
-			precomputed_moves = MoveGeneration.preComputedBigMoves[piece_coord["sx"]][piece_coord["sy"]]
+			precomputed_moves = MoveGeneration.preComputedBigMoves[piece_coord_sx][piece_coord_sy]
 			
 	for direction_index in range(0, 8):
 		var moves = precomputed_moves[direction_index]
 		for move in moves:
 			var dx = move[0]
 			var dy = move[1]
-			var move_result = board.is_piece_movement_valid(board_state, piece_coord["piece_type"], 
-				piece_coord["sx"], piece_coord["sy"], dx, dy, num_pieces_map)
+			var move_result = board.is_piece_movement_valid(board_state, piece_coord_piece_type, 
+				piece_coord_sx, piece_coord_sy, dx, dy, num_pieces_map)
 			# if not move_result[0]:
 			#	break # TODO does not account for reject move
 			if move_result[0]:		
-				# TODO use array instead of map,maybe instantiate pool of arrays too?
 				legal_moves.append(
-					_create_move(piece_coord["sx"], piece_coord["sy"],
-						dx, dy, piece_coord["piece_type"], board_state[dx][dy], move_result[1], 0)
+					_create_move(piece_coord_sx, piece_coord_sy,
+						dx, dy, piece_coord_piece_type, board_state[dx][dy], move_result[1], 0)
 				)
 			
 	return legal_moves

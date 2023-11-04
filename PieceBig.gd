@@ -25,11 +25,11 @@ func _on_area_2d_input_event(_viewport, event, _shape_idx):
 				is_dragging = true
 				starting_position = self.global_position
 				self.z_index = RenderingServer.CANVAS_ITEM_Z_MAX
-				_draw_legal_moves({
-					"sx": starting_tile_x,
-					"sy": starting_tile_y,
-					"piece_type": board.board_state[starting_tile_x][starting_tile_y],
-				})
+				_draw_legal_moves([
+					starting_tile_x,
+					starting_tile_y,
+					board.board_state[starting_tile_x][starting_tile_y]	
+				])
 				
 		elif event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 			if not is_dragging: # avoids triggering release on pieces in the destination tile
