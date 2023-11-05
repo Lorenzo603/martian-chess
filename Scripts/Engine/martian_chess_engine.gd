@@ -234,11 +234,11 @@ func get_legal_moves_for_piece_coord(board_state, player_turn, piece_coord,
 			if not move_result[0]:
 				break
 
-			if is_reject_move(
+			if _is_reject_move(
 				last_move_sx, last_move_sy, 
 				last_move_dx, last_move_dy, 
 				piece_coord_sx, piece_coord_sy, dx, dy):
-				break
+				continue
 			
 			legal_moves.append(
 				_create_move(piece_coord_sx, piece_coord_sy,
@@ -306,13 +306,6 @@ func get_num_pieces(_board_state, player_turn):
 			num_pieces_map[_board_state[i][j]] += 1 
 	return num_pieces_map
 
-func is_reject_move(_previous_starting_tile_x, _previous_starting_tile_y,
-	_previous_destination_tile_x, _previous_destination_tile_y, 
-	_starting_tile_x, _starting_tile_y,
-	_destination_tile_x, _destination_tile_y):
-	return _previous_starting_tile_x == _destination_tile_x and _previous_starting_tile_y == _destination_tile_y \
-		and _previous_destination_tile_x == _starting_tile_x and _previous_destination_tile_y == _starting_tile_y
-
 func is_piece_movement_valid(_board_state, player_turn, current_piece_type, 
 	previous_starting_tile_x, previous_starting_tile_y,
 	previous_destination_tile_x, previous_destination_tile_y,
@@ -335,7 +328,7 @@ func is_piece_movement_valid(_board_state, player_turn, current_piece_type,
 	
 	# cannot "reject" move
 	if consider_reject_move:
-		if is_reject_move(previous_starting_tile_x, previous_starting_tile_y,
+		if _is_reject_move(previous_starting_tile_x, previous_starting_tile_y,
 				previous_destination_tile_x, previous_destination_tile_y, 
 				starting_tile_x, starting_tile_y,
 				destination_tile_x, destination_tile_y):
@@ -377,13 +370,16 @@ func is_piece_movement_valid(_board_state, player_turn, current_piece_type,
 
 	return [false, promotion_piece]
 
+func _has_crossed_canal(starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
+	return (starting_tile_x >= 4 and destination_tile_x <= 3) or (starting_tile_x <= 3 and destination_tile_x >= 4)
+
 # If you have no Queens, you can create one by moving a Drone into a Pawn’s space (or vice versa)
 # and merging them. Similarly, if you control no Drones, you can make one by merging two of your Pawns.
 func _get_promotion_piece(_board_state, player_turn, starting_tile_x, starting_tile_y, 
 	destination_tile_x, destination_tile_y, num_pieces_map=null):
 	
 	# Cannot promote when crossing canal
-	if (starting_tile_x >= 4 and destination_tile_x <= 3) or (starting_tile_x <= 3 and destination_tile_x >= 4):
+	if _has_crossed_canal(starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
 		return ""
 	
 	if num_pieces_map == null:
@@ -398,4 +394,9 @@ func _get_promotion_piece(_board_state, player_turn, starting_tile_x, starting_t
 		return "M"
 	return ""
 
-
+func _is_reject_move(_previous_starting_tile_x, _previous_starting_tile_y,
+	_previous_destination_tile_x, _previous_destination_tile_y, 
+	_starting_tile_x, _starting_tile_y,
+	_destination_tile_x, _destination_tile_y):
+	return _previous_starting_tile_x == _destination_tile_x and _previous_starting_tile_y == _destination_tile_y \
+		and _previous_destination_tile_x == _starting_tile_x and _previous_destination_tile_y == _starting_tile_y
