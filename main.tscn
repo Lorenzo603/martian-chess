@@ -24,6 +24,7 @@ script = ExtResource("1_g2rbc")
 [node name="Board" type="Node" parent="."]
 script = ExtResource("1_xp1cc")
 game_mode = 3
+player_turn = 2
 
 [node name="Tile" parent="Board" instance=ExtResource("1_8shwo")]
 position = Vector2(212, 548)

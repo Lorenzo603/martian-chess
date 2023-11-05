@@ -7,8 +7,8 @@ const MAX_PLAYERS = 2
 
 enum GameMode {TWO_PLAYER, RANDOM_AI, HIGH_SCORE_AI, MINMAX_AI}
 @export var game_mode: GameMode = GameMode.TWO_PLAYER
+@export var player_turn: int = 1
 
-var player_turn = 1
 var game_over = false
 
 # row index is player index (player_turn - 1)
@@ -42,7 +42,9 @@ var previous_destination_tile_y = 0
 
 func _ready():
 	SignalBus.end_turn.connect(_on_end_turn)
-
+	if player_turn == 2:
+		SignalBus.end_turn.emit()
+		
 func update_player_turn():
 	player_turn += 1
 	if player_turn > MAX_PLAYERS:

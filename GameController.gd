@@ -5,8 +5,6 @@ const piece_medium_texture = preload("res://Assets/Sprites/PieceMedium.png")
 
 @onready var board = get_node("../Board")
 
-# TODO: player goes second
-
 func _ready():
 	SignalBus.piece_moved.connect(_on_piece_moved)
 	
