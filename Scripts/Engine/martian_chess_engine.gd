@@ -26,7 +26,7 @@ const piece_strength_map = {
 	
 }
 
-@onready var board = get_node("../Main/Board")
+var board_ref = null
 
 var best_move = null
 var previous_moves = []
@@ -64,12 +64,13 @@ func _minimax_calculation_thread():
 		print_debug("Calculating Minimax tree Completed!")
 		minimax_tree_completed.emit()
 		
-func get_best_move():
+func get_best_move(board):
+	board_ref = board
 	semaphore.post()
 	await minimax_tree_completed
 	if best_move == null:
 		print_debug("No best move found, returning best high score")
-		best_move = get_high_score_move()
+		best_move = get_high_score_move(board_ref)
 	return best_move
 	
 func _calculate_best_move():
@@ -77,17 +78,17 @@ func _calculate_best_move():
 	var bestMove = null
 	previous_moves.clear()
 	previous_num_pieces_maps.clear()
-	var board_state = board.board_state.duplicate(true)
+	var board_state = board_ref.board_state.duplicate(true)
 	var depth = 4
 
-	var num_pieces_map = board.get_num_pieces(board_state)
-	var initial_previous_move = [board.previous_starting_tile_x, board.previous_starting_tile_y, 
-			board.previous_destination_tile_x, board.previous_destination_tile_y]
+	var num_pieces_map = get_num_pieces(board_state, 2)
+	var initial_previous_move = [board_ref.previous_starting_tile_x, board_ref.previous_starting_tile_y, 
+			board_ref.previous_destination_tile_x, board_ref.previous_destination_tile_y]
 	var legal_moves = get_legal_moves(board_state, 2, initial_previous_move, num_pieces_map)
 	# SortMoves(board, pseudoLegalMoves);
 
 	for move in legal_moves:
-		_make_move(board_state, move)
+		_make_move(board_state, move, 2)
 		var cumulative_value = -piece_strength_map[move[DESTINATION_PIECE]]
 		var value = _minimax(board_state, previous_num_pieces_maps.back(), move,
 			depth, -INF, INF, true, cumulative_value)
@@ -103,13 +104,13 @@ func _calculate_best_move():
 	return bestMove
 
 
-func _make_move(board_state, move):
+func _make_move(board_state, move, player_turn):
 	var moved_piece_type = board_state[move[STARTING_TILE_X]][move[STARTING_TILE_Y]]
 	var promotion_piece_type = move[PROMOTION_PIECE]
 	board_state[move[DESTINATION_TILE_X]][move[DESTINATION_TILE_Y]] = promotion_piece_type if promotion_piece_type != "" else moved_piece_type
 	board_state[move[STARTING_TILE_X]][move[STARTING_TILE_Y]] = ""
 	previous_moves.push_back(move)
-	previous_num_pieces_maps.push_back(board.get_num_pieces(board_state))
+	previous_num_pieces_maps.push_back(get_num_pieces(board_state, player_turn))
 	
 func _unmake_move(board_state):
 	var move = previous_moves.pop_back()
@@ -126,7 +127,7 @@ func _minimax(board_state, num_pieces_map, last_move, depth, alpha, beta, is_max
 		var legal_moves = get_legal_moves(board_state, 2, last_move, num_pieces_map)
 		#SortMoves(board, pseudoLegalMoves)
 		for move in legal_moves:
-			_make_move(board_state, move) 
+			_make_move(board_state, move, 2) 
 			var value = _minimax(board_state, previous_num_pieces_maps.back(), move,
 				depth - 1, alpha, beta, false, 
 				cumulative_value + piece_strength_map[move[DESTINATION_PIECE]])
@@ -145,7 +146,7 @@ func _minimax(board_state, num_pieces_map, last_move, depth, alpha, beta, is_max
 		var legal_moves = get_legal_moves(board_state, 1, last_move, num_pieces_map)
 		#SortMoves(board, pseudoLegalMoves)
 		for move in legal_moves:
-			_make_move(board_state, move)
+			_make_move(board_state, move, 1)
 			var value = _minimax(board_state, previous_num_pieces_maps.back(), move, 
 				depth - 1, alpha, beta, true,
 				cumulative_value - piece_strength_map[move[DESTINATION_PIECE]])
@@ -195,11 +196,11 @@ func get_legal_moves(board_state, player_turn, last_move, num_pieces_map=null):
 					board_state[i][j]
 				])
 	for p in available_pieces:
-		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, p, last_move, num_pieces_map))
+		legal_moves.append_array(get_legal_moves_for_piece_coord(board_state, player_turn, p, last_move, num_pieces_map))
 		
 	return legal_moves
 
-func get_legal_moves_for_piece_coord(board_state, piece_coord, 
+func get_legal_moves_for_piece_coord(board_state, player_turn, piece_coord, 
 		last_move, num_pieces_map=null):
 	var piece_coord_sx = piece_coord[PIECE_COORD_STARTING_X]
 	var piece_coord_sy = piece_coord[PIECE_COORD_STARTING_Y]
@@ -225,16 +226,18 @@ func get_legal_moves_for_piece_coord(board_state, piece_coord,
 		for move in moves:
 			var dx = move[0]
 			var dy = move[1]
-			var move_result = board.is_piece_movement_valid(board_state, piece_coord_piece_type, 
+			var move_result = is_piece_movement_valid(board_state, player_turn, piece_coord_piece_type, 
+				last_move_sx, last_move_sy,
+				last_move_dx, last_move_dy,
 				piece_coord_sx, piece_coord_sy, dx, dy, num_pieces_map, false)
 			
 			if not move_result[0]:
 				break
 
-			if board.is_reject_move(
-					last_move_sx, last_move_sy, 
-					last_move_dx, last_move_dy, 
-					piece_coord_sx, piece_coord_sy, dx, dy):
+			if is_reject_move(
+				last_move_sx, last_move_sy, 
+				last_move_dx, last_move_dy, 
+				piece_coord_sx, piece_coord_sy, dx, dy):
 				break
 			
 			legal_moves.append(
@@ -259,13 +262,13 @@ func _create_move(starting_tile_x, starting_tile_y,
 		score
 	]
 	
-func get_random_move():
+func get_random_move(board):
 	var legal_moves = get_legal_moves(board.board_state, 2,
 		[board.previous_starting_tile_x, board.previous_starting_tile_y, 
 			board.previous_destination_tile_x, board.previous_destination_tile_y])
 	return legal_moves[randi() % len(legal_moves)]
 
-func get_high_score_move():
+func get_high_score_move(board):
 	var board_state = board.board_state
 	var legal_moves = get_legal_moves(board_state, 2, [board.previous_starting_tile_x, board.previous_starting_tile_y, 
 			board.previous_destination_tile_x, board.previous_destination_tile_y])
@@ -287,3 +290,112 @@ func _get_moves_with_highest_score(legal_moves, max_score):
 		if legal_move[SCORE] == max_score:
 			high_score_moves.append(legal_move)
 	return high_score_moves
+
+
+func get_num_pieces(_board_state, player_turn):
+	var num_pieces_map = {
+		"": 0,
+		"S": 0,
+		"M": 0,
+		"B": 0,
+	}
+	var starting_row = 4 if player_turn == 1 else 0
+	var ending_row = 8 if player_turn == 1 else 4
+	for i in range(starting_row, ending_row):
+		for j in range(0, 4):
+			num_pieces_map[_board_state[i][j]] += 1 
+	return num_pieces_map
+
+func is_reject_move(_previous_starting_tile_x, _previous_starting_tile_y,
+	_previous_destination_tile_x, _previous_destination_tile_y, 
+	_starting_tile_x, _starting_tile_y,
+	_destination_tile_x, _destination_tile_y):
+	return _previous_starting_tile_x == _destination_tile_x and _previous_starting_tile_y == _destination_tile_y \
+		and _previous_destination_tile_x == _starting_tile_x and _previous_destination_tile_y == _starting_tile_y
+
+func is_piece_movement_valid(_board_state, player_turn, current_piece_type, 
+	previous_starting_tile_x, previous_starting_tile_y,
+	previous_destination_tile_x, previous_destination_tile_y,
+	starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y,
+	num_pieces_map=null, consider_reject_move=true):
+	# cannot move piece to same position
+	if starting_tile_x == destination_tile_x and starting_tile_y == destination_tile_y:
+		return [false, ""]
+	
+	# cannot capture own piece
+	var promotion_piece = _get_promotion_piece(_board_state, player_turn, 
+		starting_tile_x, starting_tile_y, 
+		destination_tile_x, destination_tile_y, num_pieces_map)
+	if promotion_piece == "" \
+		and (
+			(destination_tile_x > 3 and player_turn == 1 and _board_state[destination_tile_x][destination_tile_y] != "") \
+			or (destination_tile_x <= 3 and player_turn == 2 and _board_state[destination_tile_x][destination_tile_y] != "")
+		):
+		return [false, ""]
+	
+	# cannot "reject" move
+	if consider_reject_move:
+		if is_reject_move(previous_starting_tile_x, previous_starting_tile_y,
+				previous_destination_tile_x, previous_destination_tile_y, 
+				starting_tile_x, starting_tile_y,
+				destination_tile_x, destination_tile_y):
+			return [false, ""]
+	
+	match current_piece_type:
+		"S":
+			return [(destination_tile_x == starting_tile_x + 1 and destination_tile_y == starting_tile_y + 1) \
+				or (destination_tile_x == starting_tile_x - 1 and destination_tile_y == starting_tile_y - 1) \
+				or (destination_tile_x == starting_tile_x + 1 and destination_tile_y == starting_tile_y - 1) \
+				or (destination_tile_x == starting_tile_x - 1 and destination_tile_y == starting_tile_y + 1), promotion_piece]
+		"M":
+			return [((destination_tile_x == starting_tile_x + 1 or (destination_tile_x == starting_tile_x + 2 and _board_state[starting_tile_x + 1][starting_tile_y] == "")) and destination_tile_y == starting_tile_y) \
+				or ((destination_tile_x == starting_tile_x - 1 or (destination_tile_x == starting_tile_x - 2 and _board_state[starting_tile_x - 1][starting_tile_y] == "")) and destination_tile_y == starting_tile_y) \
+				or ((destination_tile_y == starting_tile_y + 1 or (destination_tile_y == starting_tile_y + 2 and _board_state[starting_tile_x][starting_tile_y + 1] == "")) and destination_tile_x == starting_tile_x) \
+				or ((destination_tile_y == starting_tile_y - 1 or (destination_tile_y == starting_tile_y - 2 and _board_state[starting_tile_x][starting_tile_y - 1] == "")) and destination_tile_x == starting_tile_x), promotion_piece]
+		"B":
+			if abs(starting_tile_x - destination_tile_x) == abs(starting_tile_y - destination_tile_y):
+				for num_gaps in range(1, abs(starting_tile_x - destination_tile_x)):
+					var i = starting_tile_x + num_gaps * (1 if destination_tile_x > starting_tile_x else -1)
+					var j = starting_tile_y + num_gaps * (1 if destination_tile_y > starting_tile_y else -1)
+					if _board_state[i][j] != "":
+						return [false, promotion_piece]
+				return [true, promotion_piece]
+
+			if starting_tile_x == destination_tile_x:
+				for i in range(min(starting_tile_y, destination_tile_y) + 1, max(starting_tile_y, destination_tile_y)):
+					if _board_state[starting_tile_x][i] != "":
+						return [false, promotion_piece]
+				return [true, promotion_piece]
+			
+			if starting_tile_y == destination_tile_y:
+				for i in range(min(starting_tile_x, destination_tile_x) + 1, max(starting_tile_x, destination_tile_x)):
+					if _board_state[i][starting_tile_y] != "":
+						return [false, promotion_piece]
+				return [true, promotion_piece]
+			
+			return [false, promotion_piece]
+
+	return [false, promotion_piece]
+
+# If you have no Queens, you can create one by moving a Drone into a Pawn’s space (or vice versa)
+# and merging them. Similarly, if you control no Drones, you can make one by merging two of your Pawns.
+func _get_promotion_piece(_board_state, player_turn, starting_tile_x, starting_tile_y, 
+	destination_tile_x, destination_tile_y, num_pieces_map=null):
+	
+	# Cannot promote when crossing canal
+	if (starting_tile_x >= 4 and destination_tile_x <= 3) or (starting_tile_x <= 3 and destination_tile_x >= 4):
+		return ""
+	
+	if num_pieces_map == null:
+		num_pieces_map = get_num_pieces(_board_state, player_turn)
+		
+	if num_pieces_map["B"] == 0 and \
+		((_board_state[starting_tile_x][starting_tile_y] == "S" and _board_state[destination_tile_x][destination_tile_y] == "M")
+		or (_board_state[starting_tile_x][starting_tile_y] == "M" and _board_state[destination_tile_x][destination_tile_y] == "S")):
+		return "B"
+	if num_pieces_map["M"] == 0 and \
+		(_board_state[starting_tile_x][starting_tile_y] == "S" and _board_state[destination_tile_x][destination_tile_y] == "S"):
+		return "M"
+	return ""
+
+

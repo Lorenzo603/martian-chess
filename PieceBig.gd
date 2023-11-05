@@ -65,7 +65,8 @@ func _on_area_2d_input_event(_viewport, event, _shape_idx):
 			
 			
 func _draw_legal_moves(piece_coord):
-	var legal_moves = MartianChessEngine.get_legal_moves_for_piece_coord(board.board_state, piece_coord, 
+	var legal_moves = MartianChessEngine.get_legal_moves_for_piece_coord(
+		board.board_state, board.player_turn, piece_coord, 
 		[board.previous_starting_tile_x, board.previous_starting_tile_y, 
 			board.previous_destination_tile_x, board.previous_destination_tile_y])
 	for move in legal_moves:

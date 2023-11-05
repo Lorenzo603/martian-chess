@@ -1,229 +1,229 @@
 [gd_scene load_steps=13 format=3 uid="uid://blb60kopg8ye8"]
 
-[ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="1_8shwo"]
-[ext_resource type="Script" path="res://AIPlayer.gd" id="1_g2rbc"]
-[ext_resource type="Script" path="res://GameController.gd" id="1_m7ali"]
-[ext_resource type="Script" path="res://Board.gd" id="1_xp1cc"]
-[ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="2_a7rm7"]
-[ext_resource type="PackedScene" uid="uid://cqqr1dhi5si2y" path="res://PieceMedium.tscn" id="3_72c2s"]
-[ext_resource type="PackedScene" uid="uid://cw3uwvcp8qyfv" path="res://PieceSmall.tscn" id="4_bhcof"]
-[ext_resource type="Script" path="res://GameOverLabel.gd" id="8_a2pag"]
-[ext_resource type="Script" path="res://LabelsControl.gd" id="8_guxql"]
-[ext_resource type="Texture2D" uid="uid://b16wc5s2rwyhl" path="res://Assets/Sprites/PieceBig.png" id="11_wsu08"]
-[ext_resource type="Texture2D" uid="uid://jlpq23ju5ar6" path="res://Assets/Sprites/PieceMedium.png" id="12_74uyu"]
-[ext_resource type="Texture2D" uid="uid://bcjl1tyadbqxc" path="res://Assets/Sprites/PieceSmall.png" id="13_rnh5e"]
+[ext_resource type="Script" path="res://GameController.gd" id="1_p52nx"]
+[ext_resource type="Script" path="res://AIPlayer.gd" id="2_g4ysf"]
+[ext_resource type="Script" path="res://Board.gd" id="3_hl88j"]
+[ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="4_kxw2k"]
+[ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="5_medgg"]
+[ext_resource type="PackedScene" uid="uid://cqqr1dhi5si2y" path="res://PieceMedium.tscn" id="6_06iuy"]
+[ext_resource type="PackedScene" uid="uid://cw3uwvcp8qyfv" path="res://PieceSmall.tscn" id="7_mpoqq"]
+[ext_resource type="Script" path="res://LabelsControl.gd" id="8_r0fwp"]
+[ext_resource type="Script" path="res://GameOverLabel.gd" id="9_3akw5"]
+[ext_resource type="Texture2D" uid="uid://b16wc5s2rwyhl" path="res://Assets/Sprites/PieceBig.png" id="10_egmfa"]
+[ext_resource type="Texture2D" uid="uid://jlpq23ju5ar6" path="res://Assets/Sprites/PieceMedium.png" id="11_bjcqa"]
+[ext_resource type="Texture2D" uid="uid://bcjl1tyadbqxc" path="res://Assets/Sprites/PieceSmall.png" id="12_5xsdq"]
 
-[node name="Main" type="Node"]
+[node name="Main2D" type="Node"]
 
 [node name="GameController" type="Node" parent="."]
-script = ExtResource("1_m7ali")
+script = ExtResource("1_p52nx")
 
 [node name="AIPlayer" type="Node" parent="."]
-script = ExtResource("1_g2rbc")
+script = ExtResource("2_g4ysf")
 
 [node name="Board" type="Node" parent="."]
-script = ExtResource("1_xp1cc")
+script = ExtResource("3_hl88j")
 game_mode = 3
 
-[node name="Tile" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 548)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 7
 
-[node name="Tile2" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile2" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 548)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium")
 metadata/TileCoordX = 7
 metadata/TileCoordY = 1
 
-[node name="Tile3" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile3" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 548)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig")
 metadata/TileCoordX = 7
 metadata/TileCoordY = 2
 
-[node name="Tile4" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile4" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 548)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig2")
 metadata/TileCoordX = 7
 metadata/TileCoordY = 3
 
-[node name="Tile5" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile5" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 484)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 6
 
-[node name="Tile6" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile6" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 484)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall")
 metadata/TileCoordX = 6
 metadata/TileCoordY = 1
 
-[node name="Tile7" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile7" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 484)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium2")
 metadata/TileCoordX = 6
 metadata/TileCoordY = 2
 
-[node name="Tile8" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile8" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 484)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig3")
 metadata/TileCoordX = 6
 metadata/TileCoordY = 3
 
-[node name="Tile9" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile9" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 420)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 5
 
-[node name="Tile10" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile10" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 420)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall2")
 metadata/TileCoordX = 5
 metadata/TileCoordY = 1
 
-[node name="Tile11" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile11" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 420)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall3")
 metadata/TileCoordX = 5
 metadata/TileCoordY = 2
 
-[node name="Tile12" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile12" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 420)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium3")
 metadata/TileCoordX = 5
 metadata/TileCoordY = 3
 
-[node name="Tile13" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile13" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 356)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 4
 
-[node name="Tile14" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile14" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 356)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 4
 metadata/TileCoordY = 1
 
-[node name="Tile15" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile15" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 356)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 4
 metadata/TileCoordY = 2
 
-[node name="Tile16" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile16" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 356)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 4
 metadata/TileCoordY = 3
 
-[node name="Tile17" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile17" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 288)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 3
 
-[node name="Tile18" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile18" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 288)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 3
 metadata/TileCoordY = 1
 
-[node name="Tile19" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile19" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 288)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 3
 metadata/TileCoordY = 2
 
-[node name="Tile20" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile20" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 288)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 3
 metadata/TileCoordY = 3
 
-[node name="Tile21" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile21" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 224)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium4")
 metadata/TileCoordX = 2
 
-[node name="Tile22" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile22" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 224)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall5")
 metadata/TileCoordX = 2
 metadata/TileCoordY = 1
 
-[node name="Tile23" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile23" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 224)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall4")
 metadata/TileCoordX = 2
 metadata/TileCoordY = 2
 
-[node name="Tile24" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile24" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 224)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 2
 metadata/TileCoordY = 3
 
-[node name="Tile25" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile25" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 160)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig4")
 metadata/TileCoordX = 1
 
-[node name="Tile26" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile26" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 160)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium5")
 metadata/TileCoordX = 1
 metadata/TileCoordY = 1
 
-[node name="Tile27" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile27" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 160)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceSmall6")
 metadata/TileCoordX = 1
 metadata/TileCoordY = 2
 
-[node name="Tile28" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile28" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 160)
 scale = Vector2(2, 2)
 metadata/TileCoordX = 1
 metadata/TileCoordY = 3
 
-[node name="Tile29" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile29" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 96)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig6")
 
-[node name="Tile30" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile30" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(276, 96)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceBig5")
 metadata/TileCoordY = 1
 
-[node name="Tile31" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("1_8shwo")]
+[node name="Tile31" parent="Board" node_paths=PackedStringArray("piece") instance=ExtResource("4_kxw2k")]
 position = Vector2(340, 96)
 scale = Vector2(2, 2)
 piece = NodePath("../../PieceMedium6")
 metadata/TileCoordY = 2
 
-[node name="Tile32" parent="Board" instance=ExtResource("1_8shwo")]
+[node name="Tile32" parent="Board" instance=ExtResource("4_kxw2k")]
 position = Vector2(404, 96)
 scale = Vector2(2, 2)
 metadata/TileCoordY = 3
 
-[node name="PieceBig" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(340, 548)
 scale = Vector2(2, 2)
@@ -231,7 +231,7 @@ starting_tile_x = 7
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile3")
 
-[node name="PieceBig2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(404, 548)
 scale = Vector2(2, 2)
@@ -239,7 +239,7 @@ starting_tile_x = 7
 starting_tile_y = 3
 starting_tile_ref = NodePath("../Board/Tile4")
 
-[node name="PieceBig3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(404, 484)
 scale = Vector2(2, 2)
@@ -247,7 +247,7 @@ starting_tile_x = 6
 starting_tile_y = 3
 starting_tile_ref = NodePath("../Board/Tile8")
 
-[node name="PieceMedium" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(276, 548)
 scale = Vector2(2, 2)
@@ -255,7 +255,7 @@ starting_tile_x = 7
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile2")
 
-[node name="PieceMedium2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(340, 484)
 scale = Vector2(2, 2)
@@ -263,7 +263,7 @@ starting_tile_x = 6
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile7")
 
-[node name="PieceMedium3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(404, 420)
 scale = Vector2(2, 2)
@@ -271,55 +271,55 @@ starting_tile_x = 5
 starting_tile_y = 3
 starting_tile_ref = NodePath("../Board/Tile12")
 
-[node name="PieceSmall" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(276, 484)
 scale = Vector2(2, 2)
 starting_tile_x = 6
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile6")
 
-[node name="PieceSmall2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall2" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(276, 420)
 scale = Vector2(2, 2)
 starting_tile_x = 5
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile10")
 
-[node name="PieceSmall3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall3" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(340, 420)
 scale = Vector2(2, 2)
 starting_tile_x = 5
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile11")
 
-[node name="PieceBig4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(212, 160)
 scale = Vector2(2, 2)
 starting_tile_x = 1
 starting_tile_ref = NodePath("../Board/Tile25")
 
-[node name="PieceBig5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(276, 96)
 scale = Vector2(2, 2)
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile30")
 
-[node name="PieceBig6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("2_a7rm7")]
+[node name="PieceBig6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("5_medgg")]
 z_index = 1
 position = Vector2(212, 96)
 scale = Vector2(2, 2)
 starting_tile_ref = NodePath("../Board/Tile29")
 
-[node name="PieceMedium4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(212, 224)
 scale = Vector2(2, 2)
 starting_tile_x = 2
 starting_tile_ref = NodePath("../Board/Tile21")
 
-[node name="PieceMedium5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(276, 160)
 scale = Vector2(2, 2)
@@ -327,28 +327,28 @@ starting_tile_x = 1
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile26")
 
-[node name="PieceMedium6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("3_72c2s")]
+[node name="PieceMedium6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("6_06iuy")]
 z_index = 1
 position = Vector2(340, 96)
 scale = Vector2(2, 2)
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile31")
 
-[node name="PieceSmall4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall4" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(340, 224)
 scale = Vector2(2, 2)
 starting_tile_x = 2
 starting_tile_y = 2
 starting_tile_ref = NodePath("../Board/Tile23")
 
-[node name="PieceSmall5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall5" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(276, 224)
 scale = Vector2(2, 2)
 starting_tile_x = 2
 starting_tile_y = 1
 starting_tile_ref = NodePath("../Board/Tile22")
 
-[node name="PieceSmall6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("4_bhcof")]
+[node name="PieceSmall6" parent="." node_paths=PackedStringArray("starting_tile_ref") instance=ExtResource("7_mpoqq")]
 position = Vector2(340, 160)
 scale = Vector2(2, 2)
 starting_tile_x = 1
@@ -360,7 +360,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("8_guxql")
+script = ExtResource("8_r0fwp")
 
 [node name="Label" type="Label" parent="LabelsControl"]
 layout_mode = 0
@@ -402,31 +402,31 @@ offset_top = 313.0
 offset_right = 672.0
 offset_bottom = 339.0
 text = "GAME OVER"
-script = ExtResource("8_a2pag")
+script = ExtResource("9_3akw5")
 
 [node name="P1CapturedBig" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 520)
-texture = ExtResource("11_wsu08")
+texture = ExtResource("10_egmfa")
 
 [node name="P1CapturedMedium" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 480)
-texture = ExtResource("12_74uyu")
+texture = ExtResource("11_bjcqa")
 
 [node name="P1CapturedSmall" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 440)
-texture = ExtResource("13_rnh5e")
+texture = ExtResource("12_5xsdq")
 
 [node name="P2CapturedBig" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 120)
-texture = ExtResource("11_wsu08")
+texture = ExtResource("10_egmfa")
 
 [node name="P2CapturedMedium" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 160)
-texture = ExtResource("12_74uyu")
+texture = ExtResource("11_bjcqa")
 
 [node name="P2CapturedSmall" type="Sprite2D" parent="LabelsControl"]
 position = Vector2(500, 200)
-texture = ExtResource("13_rnh5e")
+texture = ExtResource("12_5xsdq")
 
 [node name="P1CapturedBigLabel" type="Label" parent="LabelsControl"]
 layout_mode = 0
