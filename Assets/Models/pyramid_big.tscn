@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ixycpcft7vcl"]
+
+[ext_resource type="PackedScene" uid="uid://slhabd1nj446" path="res://Assets/Models/pyramid.glb" id="1_o4wxq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21sab"]
+albedo_color = Color(0.996078, 0, 0, 1)
+
+[node name="pyramid" instance=ExtResource("1_o4wxq")]
+
+[node name="Cone" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_21sab")
