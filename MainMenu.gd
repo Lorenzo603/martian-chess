@@ -6,5 +6,5 @@ func _on_button_pressed():
 
 
 func _on_button_2_pressed():
-	get_tree().change_scene_to_file("res://Main3D.tscn")
+	get_tree().change_scene_to_file("res://3DVersion/Main3D.tscn")
 

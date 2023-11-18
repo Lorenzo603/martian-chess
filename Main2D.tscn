@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://blb60kopg8ye8"]
+[gd_scene load_steps=12 format=3 uid="uid://blb60kopg8ye8"]
 
 [ext_resource type="Script" path="res://GameController.gd" id="1_p52nx"]
-[ext_resource type="Script" path="res://AIPlayer.gd" id="2_g4ysf"]
 [ext_resource type="Script" path="res://Board.gd" id="3_hl88j"]
 [ext_resource type="PackedScene" uid="uid://b82v2l7odaygd" path="res://tile.tscn" id="4_kxw2k"]
 [ext_resource type="PackedScene" uid="uid://ed6t1xygsgca" path="res://PieceBig.tscn" id="5_medgg"]
@@ -17,9 +16,6 @@
 
 [node name="GameController" type="Node" parent="."]
 script = ExtResource("1_p52nx")
-
-[node name="AIPlayer" type="Node" parent="."]
-script = ExtResource("2_g4ysf")
 
 [node name="Board" type="Node" parent="."]
 script = ExtResource("3_hl88j")
