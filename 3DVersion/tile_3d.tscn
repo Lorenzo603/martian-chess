@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3ry5qvl2rxbd"]
+[gd_scene load_steps=4 format=3 uid="uid://d3ry5qvl2rxbd"]
+
+[ext_resource type="Script" path="res://3DVersion/tile_3d.gd" id="1_yrrrf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_qtm1j"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v56v4"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.98, 0.94, 1)
+
 [node name="MeshInstance3D" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(0.808, 0, 0, 0, 0.5, 0, 0, 0, 0.808, 0, -0.25, 0)
 mesh = SubResource("BoxMesh_qtm1j")
+surface_material_override/0 = SubResource("StandardMaterial3D_v56v4")
+script = ExtResource("1_yrrrf")
