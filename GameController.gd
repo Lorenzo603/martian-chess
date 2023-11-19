@@ -3,8 +3,6 @@ extends Node
 const piece_big_texture = preload("res://Assets/Sprites/PieceBig.png")
 const piece_medium_texture = preload("res://Assets/Sprites/PieceMedium.png")
 
-@onready var board = get_node("../Board")
-
 func _ready():
 	SignalBus.piece_moved.connect(_on_piece_moved)
 	
@@ -30,7 +28,7 @@ func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_t
 	
 	
 func _highlight_move_tiles(starting_tile: Sprite2D, destination_tile: Sprite2D):
-	for tile in board.get_children():
+	for tile in get_tree().get_nodes_in_group("tiles"):
 		tile.modulate = Color(1, 1, 1)
 	starting_tile.modulate = Color(0, 1, 0.5)
 	destination_tile.modulate = Color(0, 1, 0.5)

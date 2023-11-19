@@ -139,7 +139,7 @@ func is_game_ended():
 	return true
 
 func get_tile_by_coord(x, y):
-	for t in get_children():
+	for t in get_tree().get_nodes_in_group("tiles"):
 		if t.get_meta("TileCoordX") == x and t.get_meta("TileCoordY") == y:
 			return t
 	return null
