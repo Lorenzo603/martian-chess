@@ -4,13 +4,15 @@ extends Node3D
 
 @onready var tile_scene: PackedScene = preload("res://3DVersion/tile_3d.tscn")
 @onready var pyr_big_scene: PackedScene = preload("res://3DVersion/pyramid_big.tscn")
+@onready var pyr_medium_scene: PackedScene = preload("res://3DVersion/pyramid_medium.tscn")
+@onready var pyr_small_scene: PackedScene = preload("res://3DVersion/pyramid_small.tscn")
 
 func _ready():
 	if autogenerate_board:
 		_autogenerate_board()
 		
 func _autogenerate_board():
-	for c in get_children():
+	for c in get_tree().get_nodes_in_group("testing"):
 		c.queue_free()
 
 	var tile_scale = Vector3(2.5, 1, 2.5)
@@ -32,16 +34,24 @@ func _autogenerate_board():
 			tile.scale = tile_scale
 			tile.global_position = Vector3(start_x + _get_canal_offset(i) + 1*i*tile_scale.x, 0, start_z - 1*j*tile_scale.z)
 	
-	for coords in [[7, 3], [7, 2], [6, 3]]:
-		var big_piece = pyr_big_scene.instantiate()
-		var tile = get_tile_by_coord(coords[0], coords[1])
-		add_child(big_piece)
-		tile.piece = big_piece
-		big_piece.starting_tile_ref = tile
-		big_piece.global_position = tile.get_node("PieceClampPosition").global_position
+	_instantiate_piece(pyr_big_scene, [[7, 3], [7, 2], [6, 3], [0, 0], [0, 1], [1, 0]])
+	_instantiate_piece(pyr_medium_scene, [[7, 1], [6, 2], [5, 3], [0, 2], [1, 1], [2, 0]])
+	_instantiate_piece(pyr_small_scene, [[5, 2], [5, 1], [6, 1], [2, 1], [2, 2], [1, 2]])
+	
 
 func _get_canal_offset(x):
 	return 0.0 if x < 4 else 0.25
+
+func _instantiate_piece(piece_scene, coords_list):
+	for coords in coords_list:
+		var piece = piece_scene.instantiate()
+		var tile = get_tile_by_coord(coords[0], coords[1])
+		add_child(piece)
+		tile.set_piece(piece)
+		piece.starting_tile_x = coords[0]
+		piece.starting_tile_y = coords[1]
+		piece.starting_tile_ref = tile
+		piece.global_position = tile.get_node("PieceClampPosition").global_position
 
 func get_tile_by_coord(x, y):
 	for t in get_tree().get_nodes_in_group("tiles"):

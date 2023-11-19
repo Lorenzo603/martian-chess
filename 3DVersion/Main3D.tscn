@@ -1,17 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://bsn7e66hjrpb0"]
+[gd_scene load_steps=10 format=3 uid="uid://bsn7e66hjrpb0"]
 
-[ext_resource type="Script" path="res://3DVersion/Camera3D.gd" id="1_1j2gp"]
 [ext_resource type="Script" path="res://3DVersion/Board3D.gd" id="2_2ydfl"]
 [ext_resource type="Texture2D" uid="uid://by3pt0mutrg88" path="res://3DVersion/background.png" id="2_esqng"]
 [ext_resource type="PackedScene" uid="uid://d3ry5qvl2rxbd" path="res://3DVersion/tile_3d.tscn" id="2_ftos4"]
 [ext_resource type="PackedScene" uid="uid://ixycpcft7vcl" path="res://3DVersion/pyramid_big.tscn" id="3_7h4q5"]
 [ext_resource type="Script" path="res://3DVersion/Background.gd" id="3_b6rd3"]
+[ext_resource type="Script" path="res://Board.gd" id="6_makw1"]
+[ext_resource type="Script" path="res://3DVersion/GameController3D.gd" id="7_2bj24"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nf1nc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmhvx"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl5vg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eqb5u"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
@@ -22,8 +23,6 @@ transform = Transform3D(-0.775297, -0.446606, 0.446606, 0, 0.707107, 0.707107, -
 projection = 1
 size = 20.0
 near = 0.001
-script = ExtResource("1_1j2gp")
-pyr = null
 
 [node name="Background" type="Sprite3D" parent="Camera3D"]
 transform = Transform3D(4.2, -1.07288e-06, -7.03335e-06, 1.66893e-06, 4.2, 5.96046e-07, 7.15256e-06, 3.57628e-07, 4.2, 0.00896645, -0.183634, -78.1722)
@@ -38,14 +37,22 @@ transform = Transform3D(-0.956373, 0.290919, 0.0267818, 0.269842, 0.844496, 0.46
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 1, -2, 0)
 script = ExtResource("2_2ydfl")
 
-[node name="pyramid" parent="Board3D" instance=ExtResource("3_7h4q5")]
+[node name="pyramid" parent="Board3D" groups=["testing"] instance=ExtResource("3_7h4q5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20768, 1.99863, -0.721899)
+starting_tile_x = 0
+starting_tile_y = 0
 
-[node name="Tile" parent="Board3D" instance=ExtResource("2_ftos4")]
+[node name="Tile" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 1.18166, 1.38974, -0.617847)
-surface_material_override/0 = SubResource("StandardMaterial3D_nf1nc")
+surface_material_override/0 = SubResource("StandardMaterial3D_cmhvx")
 
-[node name="Tile2" parent="Board3D" instance=ExtResource("2_ftos4")]
+[node name="Tile2" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 0.987776, 1.38974, 1.90651)
-surface_material_override/0 = SubResource("StandardMaterial3D_bl5vg")
+surface_material_override/0 = SubResource("StandardMaterial3D_eqb5u")
 tile_color = Color(0.113725, 0.0745098, 0, 1)
+
+[node name="BoardLogic" type="Node" parent="Board3D"]
+script = ExtResource("6_makw1")
+
+[node name="GameController3D" type="Node" parent="Board3D"]
+script = ExtResource("7_2bj24")
