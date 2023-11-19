@@ -13,6 +13,7 @@ points = PackedVector3Array(0, -1, 1, 1, -1, 0, 0, -1, -1, -1, -1, 0, 0, 1, 0)
 script = ExtResource("2_xh780")
 
 [node name="Cone" parent="." index="0"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 1, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_ufbyg")
 
 [node name="UserSelectPieceArea3D" type="Area3D" parent="Cone" index="0"]
