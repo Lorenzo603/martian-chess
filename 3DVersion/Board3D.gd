@@ -21,15 +21,16 @@ func _autogenerate_board():
 		white_tile = not white_tile
 		for j in range(0, 4):
 			var tile: MeshInstance3D = tile_scene.instantiate()
-			tile.set_meta("TileCoordX", i)
-			tile.set_meta("TileCoordY", j)
-			tile.global_position = Vector3(start_x + _get_canal_offset(i) + 1*i*tile_scale.x, 0, start_z - 1*j*tile_scale.z)
-			tile.scale = tile_scale
 			if not white_tile:
 				tile.tile_color = Color.BLACK
-			tile.add_to_group("tiles")
-			add_child(tile)
 			white_tile = not white_tile
+			add_child(tile)
+			
+			tile.set_meta("TileCoordX", i)
+			tile.set_meta("TileCoordY", j)
+			tile.add_to_group("tiles")
+			tile.scale = tile_scale
+			tile.global_position = Vector3(start_x + _get_canal_offset(i) + 1*i*tile_scale.x, 0, start_z - 1*j*tile_scale.z)
 	
 	for coords in [[7, 3], [7, 2], [6, 3]]:
 		var big_piece = pyr_big_scene.instantiate()
@@ -39,7 +40,7 @@ func _autogenerate_board():
 		big_piece.global_position = tile.get_node("PieceClampPosition").global_position
 
 func _get_canal_offset(x):
-	return 0 if x < 4 else 0.25
+	return 0.0 if x < 4 else 0.25
 
 func get_tile_by_coord(x, y):
 	for t in get_tree().get_nodes_in_group("tiles"):
