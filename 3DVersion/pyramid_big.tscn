@@ -16,6 +16,7 @@ script = ExtResource("2_xh780")
 surface_material_override/0 = SubResource("StandardMaterial3D_ufbyg")
 
 [node name="UserSelectPieceArea3D" type="Area3D" parent="Cone" index="0"]
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cone/UserSelectPieceArea3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_hnn4q")

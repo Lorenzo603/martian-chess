@@ -37,6 +37,7 @@ func _autogenerate_board():
 		var tile = get_tile_by_coord(coords[0], coords[1])
 		add_child(big_piece)
 		tile.piece = big_piece
+		big_piece.starting_tile_ref = tile
 		big_piece.global_position = tile.get_node("PieceClampPosition").global_position
 
 func _get_canal_offset(x):
