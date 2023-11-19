@@ -1,11 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://ixycpcft7vcl"]
+[gd_scene load_steps=5 format=3 uid="uid://ixycpcft7vcl"]
 
 [ext_resource type="PackedScene" uid="uid://slhabd1nj446" path="res://Assets/Models/pyramid.glb" id="1_o4wxq"]
+[ext_resource type="Script" path="res://3DVersion/pyramid_big.gd" id="2_xh780"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ufbyg"]
 albedo_color = Color(1, 0, 0, 1)
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hnn4q"]
+points = PackedVector3Array(0, -1, 1, 1, -1, 0, 0, -1, -1, -1, -1, 0, 0, 1, 0)
+
 [node name="pyramid" instance=ExtResource("1_o4wxq")]
+script = ExtResource("2_xh780")
 
 [node name="Cone" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_ufbyg")
+
+[node name="UserSelectPieceArea3D" type="Area3D" parent="Cone" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cone/UserSelectPieceArea3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_hnn4q")
+
+[connection signal="input_event" from="Cone/UserSelectPieceArea3D" to="." method="_on_user_select_piece_area_3d_input_event"]

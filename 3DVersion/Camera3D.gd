@@ -1,9 +1,9 @@
 extends Camera3D
 
-@onready var pyr = $Board/pyramid
+@export var pyr: Node3D = null
 
 func _ready():
-	#look_at(pyr.global_position)
+	look_at(pyr.global_position)
 	
 	#await get_tree().create_timer(2).timeout
 	

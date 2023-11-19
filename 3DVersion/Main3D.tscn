@@ -1,29 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsn7e66hjrpb0"]
+[gd_scene load_steps=6 format=3 uid="uid://bsn7e66hjrpb0"]
 
 [ext_resource type="Script" path="res://3DVersion/Camera3D.gd" id="1_1j2gp"]
 [ext_resource type="PackedScene" uid="uid://d3ry5qvl2rxbd" path="res://3DVersion/tile_3d.tscn" id="2_ftos4"]
 [ext_resource type="PackedScene" uid="uid://ixycpcft7vcl" path="res://Assets/Models/pyramid_big.tscn" id="3_7h4q5"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5o76j"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.98, 0.94, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlfan"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.98, 0.94, 1)
+
 [node name="Main3D" type="Node"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.835443, 0.549577, 0, -0.549577, 0.835443, -0.328289, 20.5951, 33.217)
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("pyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.7322, 54.806)
 projection = 1
 size = 20.0
+near = 0.001
 script = ExtResource("1_1j2gp")
+pyr = NodePath("../Board/pyramid")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.518793, -0.532249, 0.669003, 0.269842, 0.844496, 0.462613, -0.811196, -0.0594755, 0.581742, 8.10246, 10.3273, 7.6004)
 
 [node name="Board" type="Node3D" parent="."]
-transform = Transform3D(0.861088, 0, -0.508455, 0, 1, 0, 0.508455, 0, 0.861088, -1.19382, -1.95782, 9.96326)
+transform = Transform3D(0.861088, 0, -0.508455, 0, 1, 0, 0.508455, 0, 0.861088, 1, -2, 0)
 
 [node name="pyramid" parent="Board" instance=ExtResource("3_7h4q5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10493, 1.99863, 1.10319)
 
 [node name="Tile" parent="Board" instance=ExtResource("2_ftos4")]
 transform = Transform3D(2.5, 0, 0.00152719, 0, 1, 0, -0.00152719, 0, 2.5, 1.12392, 1.38974, 0.997628)
+surface_material_override/0 = SubResource("StandardMaterial3D_5o76j")
 
 [node name="Tile2" parent="Board" instance=ExtResource("2_ftos4")]
 transform = Transform3D(2.5, 0, 0.00152719, 0, 1, 0, -0.00152719, 0, 2.5, 1.14827, 1.38974, -1.53405)
+surface_material_override/0 = SubResource("StandardMaterial3D_qlfan")
 tile_color = Color(0.113725, 0.0745098, 0, 1)
