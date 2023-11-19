@@ -34,8 +34,7 @@ func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_t
 	
 	
 func _highlight_move_tiles(starting_tile: MeshInstance3D, destination_tile: MeshInstance3D):
-	#for tile in board3D.get_children():
-	#	tile.modulate = Color(1, 1, 1)
-	#starting_tile.modulate = Color(0, 1, 0.5)
-	#destination_tile.modulate = Color(0, 1, 0.5)
-	pass
+	for tile in get_tree().get_nodes_in_group("tiles"):
+		tile.get_surface_override_material(0).albedo_color = tile.tile_color
+	starting_tile.get_surface_override_material(0).albedo_color = Color(0, 1, 0.5)
+	destination_tile.get_surface_override_material(0).albedo_color = Color(0, 1, 0.5)
