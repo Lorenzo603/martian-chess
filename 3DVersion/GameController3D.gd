@@ -1,9 +1,9 @@
 extends Node
 
-const piece_big_scene = preload("res://Assets/Models/pyramid.glb")
-const piece_medium_scene = preload("res://Assets/Sprites/PieceMedium.png")
+@onready var pyr_big_scene: PackedScene = preload("res://3DVersion/pyramid_big.tscn")
+@onready var pyr_medium_scene: PackedScene = preload("res://3DVersion/pyramid_medium.tscn")
 
-@onready var board = get_node("../Board")
+@onready var board3D = get_parent()
 
 func _ready():
 	SignalBus.piece_moved.connect(_on_piece_moved)
@@ -18,9 +18,12 @@ func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_t
 	if has_captured:
 		destination_tile.get_piece().queue_free()
 	if promotion_piece != "":
-		var a=1
-		# TODO change model
-		# moved_piece.set_texture(piece_big_texture if promotion_piece == "B" else piece_medium_texture)
+		var new_promoted_piece = pyr_big_scene.instantiate() if promotion_piece == "B" else pyr_medium_scene.instantiate()
+		board3D.add_child(new_promoted_piece)
+		destination_tile.get_piece().queue_free()
+		moved_piece.queue_free()
+		moved_piece = new_promoted_piece
+		
 	destination_tile.set_piece(moved_piece)
 	moved_piece.starting_tile_ref = destination_tile
 	
@@ -31,7 +34,7 @@ func _on_piece_moved(moved_piece, move_result, destination_tile_x, destination_t
 	
 	
 func _highlight_move_tiles(starting_tile: MeshInstance3D, destination_tile: MeshInstance3D):
-	#for tile in board.get_children():
+	#for tile in board3D.get_children():
 	#	tile.modulate = Color(1, 1, 1)
 	#starting_tile.modulate = Color(0, 1, 0.5)
 	#destination_tile.modulate = Color(0, 1, 0.5)
