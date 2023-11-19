@@ -4,21 +4,21 @@
 [ext_resource type="Script" path="res://3DVersion/Board3D.gd" id="2_2ydfl"]
 [ext_resource type="Texture2D" uid="uid://by3pt0mutrg88" path="res://3DVersion/background.png" id="2_esqng"]
 [ext_resource type="PackedScene" uid="uid://d3ry5qvl2rxbd" path="res://3DVersion/tile_3d.tscn" id="2_ftos4"]
-[ext_resource type="PackedScene" uid="uid://ixycpcft7vcl" path="res://Assets/Models/pyramid_big.tscn" id="3_7h4q5"]
+[ext_resource type="PackedScene" uid="uid://ixycpcft7vcl" path="res://3DVersion/pyramid_big.tscn" id="3_7h4q5"]
 [ext_resource type="Script" path="res://3DVersion/Background.gd" id="3_b6rd3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5tjc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j266m"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ldoy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgnui"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
 [node name="Main3D" type="Node"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.775297, -0.446606, 0.446606, 0, 0.707107, 0.707107, -0.631596, 0.548218, -0.548218, 19.6166, 24.732, -18.6564)
+transform = Transform3D(-0.775297, -0.446606, 0.446606, 0, 0.707107, 0.707107, -0.631596, 0.548218, -0.548218, 27.7536, 25.2715, -24.292)
 projection = 1
 size = 20.0
 near = 0.001
@@ -43,9 +43,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20768, 1.99863, -0.721899)
 
 [node name="Tile" parent="Board3D" instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 1.18166, 1.38974, -0.617847)
-surface_material_override/0 = SubResource("StandardMaterial3D_y5tjc")
+surface_material_override/0 = SubResource("StandardMaterial3D_j266m")
 
 [node name="Tile2" parent="Board3D" instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 0.987776, 1.38974, 1.90651)
-surface_material_override/0 = SubResource("StandardMaterial3D_7ldoy")
+surface_material_override/0 = SubResource("StandardMaterial3D_qgnui")
 tile_color = Color(0.113725, 0.0745098, 0, 1)

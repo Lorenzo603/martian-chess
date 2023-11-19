@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3ry5qvl2rxbd"]
+[gd_scene load_steps=6 format=3 uid="uid://d3ry5qvl2rxbd"]
 
 [ext_resource type="Script" path="res://3DVersion/tile_3d.gd" id="1_yrrrf"]
 
@@ -7,6 +7,8 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v56v4"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dt2bb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bpvao"]
 
@@ -18,7 +20,12 @@ script = ExtResource("1_yrrrf")
 
 [node name="PieceClampPosition" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="LegalMoveMarker" type="Sprite3D" parent="PieceClampPosition"]
+transform = Transform3D(50, 0, 0, 0, -2.18557e-06, -50, 0, 50, -2.18557e-06, 0, 0.0136935, 0)
 visible = false
+modulate = Color(1, 0, 1, 1)
+texture = SubResource("CanvasTexture_dt2bb")
 
 [node name="Area3D" type="Area3D" parent="."]
 
