@@ -1,41 +1,51 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsn7e66hjrpb0"]
+[gd_scene load_steps=9 format=3 uid="uid://bsn7e66hjrpb0"]
 
 [ext_resource type="Script" path="res://3DVersion/Camera3D.gd" id="1_1j2gp"]
+[ext_resource type="Script" path="res://3DVersion/Board3D.gd" id="2_2ydfl"]
+[ext_resource type="Texture2D" uid="uid://by3pt0mutrg88" path="res://3DVersion/background.png" id="2_esqng"]
 [ext_resource type="PackedScene" uid="uid://d3ry5qvl2rxbd" path="res://3DVersion/tile_3d.tscn" id="2_ftos4"]
 [ext_resource type="PackedScene" uid="uid://ixycpcft7vcl" path="res://Assets/Models/pyramid_big.tscn" id="3_7h4q5"]
+[ext_resource type="Script" path="res://3DVersion/Background.gd" id="3_b6rd3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5o76j"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5tjc"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlfan"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ldoy"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
 [node name="Main3D" type="Node"]
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("pyr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.7322, 54.806)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.775297, -0.446606, 0.446606, 0, 0.707107, 0.707107, -0.631596, 0.548218, -0.548218, 19.6166, 24.732, -18.6564)
 projection = 1
 size = 20.0
 near = 0.001
 script = ExtResource("1_1j2gp")
-pyr = NodePath("../Board/pyramid")
+pyr = null
+
+[node name="Background" type="Sprite3D" parent="Camera3D"]
+transform = Transform3D(4.2, -1.07288e-06, -7.03335e-06, 1.66893e-06, 4.2, 5.96046e-07, 7.15256e-06, 3.57628e-07, 4.2, 0.00896645, -0.183634, -78.1722)
+visible = false
+texture = ExtResource("2_esqng")
+script = ExtResource("3_b6rd3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.518793, -0.532249, 0.669003, 0.269842, 0.844496, 0.462613, -0.811196, -0.0594755, 0.581742, 8.10246, 10.3273, 7.6004)
 
-[node name="Board" type="Node3D" parent="."]
-transform = Transform3D(0.861088, 0, -0.508455, 0, 1, 0, 0.508455, 0, 0.861088, 1, -2, 0)
+[node name="Board3D" type="Node3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 1, -2, 0)
+script = ExtResource("2_2ydfl")
 
-[node name="pyramid" parent="Board" instance=ExtResource("3_7h4q5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10493, 1.99863, 1.10319)
+[node name="pyramid" parent="Board3D" instance=ExtResource("3_7h4q5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20768, 1.99863, -0.721899)
 
-[node name="Tile" parent="Board" instance=ExtResource("2_ftos4")]
-transform = Transform3D(2.5, 0, 0.00152719, 0, 1, 0, -0.00152719, 0, 2.5, 1.12392, 1.38974, 0.997628)
-surface_material_override/0 = SubResource("StandardMaterial3D_5o76j")
+[node name="Tile" parent="Board3D" instance=ExtResource("2_ftos4")]
+transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 1.18166, 1.38974, -0.617847)
+surface_material_override/0 = SubResource("StandardMaterial3D_y5tjc")
 
-[node name="Tile2" parent="Board" instance=ExtResource("2_ftos4")]
-transform = Transform3D(2.5, 0, 0.00152719, 0, 1, 0, -0.00152719, 0, 2.5, 1.14827, 1.38974, -1.53405)
-surface_material_override/0 = SubResource("StandardMaterial3D_qlfan")
+[node name="Tile2" parent="Board3D" instance=ExtResource("2_ftos4")]
+transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 0.987776, 1.38974, 1.90651)
+surface_material_override/0 = SubResource("StandardMaterial3D_7ldoy")
 tile_color = Color(0.113725, 0.0745098, 0, 1)
