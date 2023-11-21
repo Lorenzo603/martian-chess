@@ -19,7 +19,6 @@ script = ExtResource("1_p52nx")
 
 [node name="Board" type="Node" parent="."]
 script = ExtResource("3_hl88j")
-game_mode = 3
 
 [node name="Tile" parent="Board" groups=["tiles"] instance=ExtResource("4_kxw2k")]
 position = Vector2(212, 548)

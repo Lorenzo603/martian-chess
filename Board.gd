@@ -5,8 +5,7 @@ signal game_ended
 
 const MAX_PLAYERS = 2
 
-enum GameMode {TWO_PLAYER, RANDOM_AI, HIGH_SCORE_AI, MINMAX_AI}
-@export var game_mode: GameMode = GameMode.TWO_PLAYER
+@onready var game_mode: GlobalState.GameMode = GlobalState.game_mode
 @export var player_turn: int = 1
 
 var game_over = false
@@ -54,7 +53,7 @@ func is_piece_draggable(starting_tile_x):
 	return not game_over and \
 		(
 			(starting_tile_x > 3 and player_turn == 1) 
-			or (starting_tile_x <=3 and player_turn == 2 and game_mode == GameMode.TWO_PLAYER)
+			or (starting_tile_x <=3 and player_turn == 2 and game_mode == GlobalState.GameMode.TWO_PLAYER)
 		)
 
 func is_move_valid(starting_tile_x, starting_tile_y, destination_tile_x, destination_tile_y):
@@ -102,15 +101,15 @@ func _on_end_turn():
 	
 	var next_move = null
 	match game_mode:
-		GameMode.TWO_PLAYER:
+		GlobalState.GameMode.TWO_PLAYER:
 			return
-		GameMode.RANDOM_AI:
+		GlobalState.GameMode.RANDOM_AI:
 			await get_tree().create_timer(1.0).timeout
 			next_move = MartianChessEngine.get_random_move(self)
-		GameMode.HIGH_SCORE_AI:
+		GlobalState.GameMode.HIGH_SCORE_AI:
 			await get_tree().create_timer(1.0).timeout
 			next_move = MartianChessEngine.get_high_score_move(self)
-		GameMode.MINMAX_AI:
+		GlobalState.GameMode.MINMAX_AI:
 			await get_tree().create_timer(0.5).timeout
 			next_move = await MartianChessEngine.get_best_move(self)
 			#print_debug("moved on..." + str(next_move))

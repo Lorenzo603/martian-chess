@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 SignalBus="*res://signal_bus.gd"
 MartianChessEngine="*res://Scripts/Engine/martian_chess_engine.gd"
 MoveGeneration="*res://Scripts/Engine/move_generation.gd"
+GlobalState="*res://Scripts/global_state.gd"
 
 [editor_plugins]
 

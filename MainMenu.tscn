@@ -6,10 +6,10 @@
 script = ExtResource("1_8d14q")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 200.0
-offset_top = 224.0
-offset_right = 431.0
-offset_bottom = 255.0
+offset_left = 611.0
+offset_top = 319.0
+offset_right = 842.0
+offset_bottom = 350.0
 text = "2D"
 
 [node name="Button2" type="Button" parent="."]
@@ -19,5 +19,17 @@ offset_right = 840.0
 offset_bottom = 413.0
 text = "3D"
 
+[node name="ItemList" type="ItemList" parent="."]
+offset_left = 101.0
+offset_top = 82.0
+offset_right = 275.0
+offset_bottom = 220.0
+item_count = 4
+item_0/text = "2 Humans"
+item_1/text = "Random Moves"
+item_2/text = "High Score"
+item_3/text = "Minmax algorithm"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="item_selected" from="ItemList" to="." method="_on_item_list_item_selected"]

@@ -8,11 +8,11 @@
 [ext_resource type="Script" path="res://Board.gd" id="6_makw1"]
 [ext_resource type="Script" path="res://3DVersion/GameController3D.gd" id="7_2bj24"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jf6ey"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qq76h"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3u3y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qiv6b"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
@@ -42,11 +42,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20768, 1.99863, -0.721899)
 
 [node name="Tile" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 1.18166, 1.38974, -0.617847)
-surface_material_override/0 = SubResource("StandardMaterial3D_jf6ey")
+surface_material_override/0 = SubResource("StandardMaterial3D_qq76h")
 
 [node name="Tile2" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 0.987776, 1.38974, 1.90651)
-surface_material_override/0 = SubResource("StandardMaterial3D_j3u3y")
+surface_material_override/0 = SubResource("StandardMaterial3D_qiv6b")
 tile_color = Color(0.113725, 0.0745098, 0, 1)
 
 [node name="BoardLogic" type="Node" parent="Board3D"]
