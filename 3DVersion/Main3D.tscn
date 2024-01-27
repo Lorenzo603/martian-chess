@@ -14,11 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://jlpq23ju5ar6" path="res://Assets/Sprites/PieceMedium.png" id="11_bwsml"]
 [ext_resource type="Texture2D" uid="uid://bcjl1tyadbqxc" path="res://Assets/Sprites/PieceSmall.png" id="12_cfn22"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5nr88"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrbd1"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xfkw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wffy3"]
 resource_local_to_scene = true
 albedo_color = Color(1, 0.98, 0.94, 1)
 
@@ -48,11 +48,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20768, 1.99863, -0.721899)
 
 [node name="Tile" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 1.18166, 1.38974, -0.617847)
-surface_material_override/0 = SubResource("StandardMaterial3D_5nr88")
+surface_material_override/0 = SubResource("StandardMaterial3D_nrbd1")
 
 [node name="Tile2" parent="Board3D" groups=["testing"] instance=ExtResource("2_ftos4")]
 transform = Transform3D(-2.5, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, -2.5, 0.987776, 1.38974, 1.90651)
-surface_material_override/0 = SubResource("StandardMaterial3D_0xfkw")
+surface_material_override/0 = SubResource("StandardMaterial3D_wffy3")
 tile_color = Color(0.113725, 0.0745098, 0, 1)
 
 [node name="BoardLogic" type="Node" parent="Board3D"]
@@ -68,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("8_cghhg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LabelsControl"]
