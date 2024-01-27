@@ -1,14 +1,14 @@
 extends Control
 
-@onready var player_1_score = $Player1Score
-@onready var player_2_score = $Player2Score
+@onready var player_1_score = $VBoxContainer/HBoxContainer/Player1Score
+@onready var player_2_score = $VBoxContainer2/HBoxContainer/Player2Score
 
-@onready var p1_captured_big = $P1CapturedBigLabel
-@onready var p1_captured_medium = $P1CapturedMediumLabel
-@onready var p1_captured_small = $P1CapturedSmallLabel
-@onready var p2_captured_big = $P2CapturedBigLabel
-@onready var p2_captured_medium = $P2CapturedMediumLabel
-@onready var p2_captured_small = $P2CapturedSmallLabel
+@onready var p1_captured_big = $VBoxContainer/HBoxContainer2/P1CapturedBigLabel
+@onready var p1_captured_medium = $VBoxContainer/HBoxContainer3/P1CapturedMediumLabel
+@onready var p1_captured_small = $VBoxContainer/HBoxContainer4/P1CapturedSmallLabel
+@onready var p2_captured_big = $VBoxContainer2/HBoxContainer2/P2CapturedBigLabel
+@onready var p2_captured_medium = $VBoxContainer2/HBoxContainer3/P2CapturedMediumLabel
+@onready var p2_captured_small = $VBoxContainer2/HBoxContainer4/P2CapturedSmallLabel
 
 
 func _on_score_changed(player, captured_pieces, new_score):
